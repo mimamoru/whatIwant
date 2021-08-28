@@ -12,10 +12,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npx concurrently \"npm run whatiwant\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "whatiwant": "json-server --watch .\\json-server\\api\\db.json --port 3001"
   },
   "eslintConfig": {
     "extends": [
