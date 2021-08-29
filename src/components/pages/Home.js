@@ -2,7 +2,7 @@ import { React } from "react";
 import { useHistory } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import mainimg from "../../images/mainimg.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -12,11 +12,18 @@ const useStyles = makeStyles((theme) => ({
     height: "1200px",
     backgroundSize: "100% auto",
   },
-  button: {
+  button1: {
+    position: "absolute",
+    textTransform: "none",
+    top: "calc(50% - 130px)",
+    left: "calc(50% - 50px)",
+    margin: "100",
+  },
+  button2: {
     position: "absolute",
     textTransform: "none",
     top: "calc(50% - 50px)",
-    left: "calc(50% - 50px)",
+    left: "calc(50% - 65px)",
     margin: "100",
   },
 }));
@@ -25,21 +32,35 @@ const Home = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const handleStart = () => {
-    history.push("/search");
+  const handleSignIn = () => {
+    history.push("/signin");
   };
+  const handleSignUp = () => {
+    history.push("/signup");
+  };
+
 
   return (
     <div className={classes.root}>
       <Button
-        className={classes.button}
+        className={classes.button1}
         type="button"
-        onClick={handleStart}
+        onClick={handleSignIn}
         variant="contained"
         size="large"
         color="primary"
       >
-        Teach Me !
+        はじめる
+      </Button>
+      <Button
+        className={classes.button2}
+        type="button"
+        onClick={handleSignUp}
+        variant="contained"
+        size="large"
+        color="primary"
+      >
+        ユーザー登録
       </Button>
     </div>
   );

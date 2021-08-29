@@ -28,7 +28,7 @@ const PrivateRoute = ({ ...props }) => {
     console.log(`ログインしてください`);
     return (
       <Redirect
-        to={{ pathname: "/signin", state: { from: props.location?.pathname } }}
+        to={{ pathname: "/signin"  }}
       />
     );
   }
@@ -37,11 +37,10 @@ const PrivateRoute = ({ ...props }) => {
 const UnAuthRoute = ({ ...props }) => {
   const authUser = useAuthUser();
   const isAuthenticated = authUser != null;
-  const { from } = useLocation().state;
 
   if (isAuthenticated) {
     console.log(`すでにログイン済みです`);
-    return <Redirect to={from ?? "/search"} />;
+    return <Redirect to={"/mypage"} />;
   } else {
     return <Route {...props} />;
   }

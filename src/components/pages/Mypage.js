@@ -6,9 +6,9 @@ import { UserItemsContext } from "../../context/UserItemsContext";
 import { UserComparesContext } from "../../context/UserComparesContext";
 import { getData } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
-
+import GenericTemplate from "../modules/GenericTemplate";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import mainimg from "../../images/mainimg.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,18 +36,11 @@ const Mypage = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Button
-        className={classes.button}
-        type="button"
-        onClick={handleStart}
-        variant="contained"
-        size="large"
-        color="primary"
-      >
-        Teach Me !
-      </Button>
-    </div>
+    <GenericTemplate title="マイページ">
+      <div id="wrapper" className={classes.root}>
+        サンプル
+      </div>
+    </GenericTemplate>
   );
 };
 

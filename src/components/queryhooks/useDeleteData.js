@@ -21,7 +21,7 @@ export const useDeleteData = () => {
           })
           .catch((err) => setIsError(err.response.status));
       }
-      if (authUser.split("U")[1] !== paramId.split("U")[1]) {
+      if (authUser.id.split("U")[1] !== paramId.split("U")[1]) {
         setIsError(999);
         setIsLoading(false);
         return;

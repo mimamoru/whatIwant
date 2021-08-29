@@ -25,19 +25,25 @@ export const usePostData = () => {
             data.id = "U" + (+currentNum + 1);
           } else {
             data.id =
-              (type === "item" ? "IT" : "CP") + (+currentNum + 1) + authUser;
+              (type === "item" ? "IT" : "CP") + (+currentNum + 1) + authUser.id;
           }
         })
-        .catch((err) => setIsError(err.response.status));
-
+        .catch((err) => setIsError(err.response?.status));
+      if (!data.id) {
+        setIsLoading(false);
+        return;
+      }
       if (type !== "compare") {
+        data.record = {};
         data.record.createDate = getCurrentDate;
         data.record.recordDate = getCurrentDate;
       }
-      if (type !== "user") data.userId = authUser;
-      await postData(type, data).catch((err) =>
-        setIsError(err.response.status)
-      );
+      console.log(type);
+      if (type === ("item" || "compare")) data.userId = authUser.id;
+      await postData(type, data).catch((err) => {
+        console.log(err.response);
+        setIsError(err.response?.status);
+      });
       setIsLoading(false);
     };
     post();

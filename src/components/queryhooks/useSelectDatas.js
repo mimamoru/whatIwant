@@ -14,13 +14,32 @@ export const useSelectDatas = () => {
       setIsError(false);
       setIsLoading(true);
       const { type, param } = condition;
+      let con;
 
-      await selectDatas(type, `userId=${authUser}${param}`)
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((err) => setIsError(err.response.status));
-      setIsLoading(false);
+      if (type === "user") {
+        con = param;
+      } else {
+        if (!authUser) {
+          setIsLoading(false);
+          setIsError(999);
+          return;
+        } else {
+          con = `?userId=${authUser.id}${param}`;
+        }
+      }
+      console.log(type,con);
+      if (type === "user" || con) {
+        await selectDatas(type, con)
+          .then((res) => {
+            console.log(res.data)
+            setData(res.data?res.data:[]);
+          })
+          .catch((err) => {
+            console.log(err.response?.status);
+            setIsError(err.response?.status);
+          });
+        setIsLoading(false);
+      }
     };
     select();
   }, [condition, authUser]);

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { putData, getCurrentDate, getData } from "../modules/myapi";
-import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePutData = () => {
-  const authUser = useAuthUser();
   const [condition, setCondition] = useState({
     type: "",
     data: {},
@@ -45,7 +43,7 @@ export const usePutData = () => {
       setIsLoading(false);
     };
     put();
-  }, [condition, authUser]);
+  }, [condition]);
 
   return [{ isLoading, isError }, setCondition];
 };

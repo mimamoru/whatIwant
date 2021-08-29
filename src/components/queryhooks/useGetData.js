@@ -14,7 +14,7 @@ export const useGetData = () => {
       setIsError(false);
       setIsLoading(true);
       const { type, id } = condition;
-      if (authUser.split("U")[1] !== id.split("U")[1]) {
+      if (authUser.id.split("U")[1] !== id.split("U")[1]) {
         setIsError(999);
         setIsLoading(false);
         return;

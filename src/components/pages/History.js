@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useCallback,useContext } from "react";
 import GenericTemplate from "../modules/GenericTemplate";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { DataGrid } from "@material-ui/data-grid";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";

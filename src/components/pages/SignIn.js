@@ -1,41 +1,81 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
-import Container from '@material-ui/core/Container';
+import React, { memo, useContext, useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { useSignin } from "../../context/AuthUserContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { BaseYup } from "../modules/localeJP";
+import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+//バリデーションの指定
+const schema = BaseYup.object().shape({
+  mail: BaseYup.string().required().email().label("メールアドレス"),
+  password: BaseYup.string()
+    .required()
+    .min(8)
+    .max(50)
+    .minValid()
+    .label("パスワード"),
+});
+//FORMデフォルト値の指定
+const defaultValues = {
+  mail: "",
+  password: "",
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
-export default function SignIn() {
+const SignIn = memo(() => {
+  const history = useHistory();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: defaultValues,
+    resolver: yupResolver(schema),
+  });
+
   const classes = useStyles();
 
+  //サインインcontext
+  const signin = useSignin();
+
+  const [confirm, setcConfirm] = useState(false);
+
+  const handlePageChange = () => {
+    history.push("/signup");
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -44,58 +84,78 @@ export default function SignIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          ようこそ
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+        <form onSubmit={handleSubmit((data) => signin(data))} className="form">
+          <Controller
+            control={control}
+            name="mail"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="メールアドレス*"
+                fullWidth
+                variant="outlined"
+                margin="normal"
+              />
+            )}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
+          <p className="error">{errors.mail?.message}</p>
+          <Controller
+            control={control}
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="パスワード*"
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                type="password"
+                id="password"
+              />
+            )}
           />
+          <p className="error">{errors.password?.message}</p>
+
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={
+              <Checkbox
+                value="notRobot"
+                color="primary"
+                onChange={() => setcConfirm((pre) => !pre)}
+              />
+            }
+            label="私はロボットではありません"
           />
           <Button
+            id="button"
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!confirm}
           >
-            Sign In
+            はじめる
           </Button>
           <Grid container>
-            <Grid item xs>
-            <Link to="/signup" variant="body2">
-                パスワードをお忘れですか?
-              </Link>
-            </Grid>
             <Grid item>
-            <Link to="/signup" variant="body2">
-                {"アカウントをお持ちではありませんか? Sign Up"}
-              </Link>
+              アカウントをお持ちではありませんか?
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={handlePageChange}
+              >
+                ユーザー登録
+              </Button>
             </Grid>
           </Grid>
         </form>
       </div>
     </Container>
   );
-}
+});
+
+export default SignIn;

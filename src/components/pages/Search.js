@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import ReactSelect from "react-select";
 import { useLocation, useHistory } from "react-router-dom";
 import { useUserItems } from "../../context/UserItemsContext";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -129,8 +129,8 @@ const Search = () => {
   const location = useLocation();
   const [actionErr, setActionErr] = useState(true);
 
-  const { items, itsLoaging, itsErr, setReroadItems } =
-    useContext(useUserItems);
+  const { items, itsLoaging, itsErr, setReroadItems } = useContext(useUserItems);
+  console.log();
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
