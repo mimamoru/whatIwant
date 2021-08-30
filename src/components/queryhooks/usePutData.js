@@ -12,14 +12,15 @@ export const usePutData = () => {
 
   useEffect(() => {
     const put = async () => {
+      const { type, data, decide } = condition;
+      if (!type) return;
       setIsError(false);
       setIsLoading(true);
-      const { type, data, decide } = condition;
       const id = data.id;
       let currentData;
       await getData(type, id)
         .then((res) => {
-          currentData = res.data;
+          currentData = res;
         })
         .catch((err) => setIsError(err.response.status));
       if (!currentData) {

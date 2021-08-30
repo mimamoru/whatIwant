@@ -4,28 +4,35 @@ import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePostData = () => {
   const authUser = useAuthUser();
+  const [id, setId] = useState(null);
   const [condition, setCondition] = useState({ type: "", data: {} });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const post = async () => {
+      const { type, data } = condition;
+      if (!type) return;
       setIsError(false);
       setIsLoading(true);
-      const { type, data } = condition;
-
       await selectDatas(type)
         .then((res) => {
-          const response = res.data;
-          const currentNum =
-            response === []
-              ? "000"
-              : response[response.length - 1].id.split("U")[0].slice(-3);
+          const response = res;
           if (type === "user") {
-            data.id = "U" + (+currentNum + 1);
+            const currentNum =
+              response === []
+                ? 0
+                : +response[response.length - 1].id.split("U")[1];
+            data.id = "U" + ("00" + (+currentNum + 1)).slice(-3);
           } else {
+            const currentNum =
+              response === []
+                ? 0
+                : +response[response.length - 1].id.split("U")[0];
             data.id =
-              (type === "item" ? "IT" : "CP") + (+currentNum + 1) + authUser.id;
+              (type === "item" ? "IT" : "CP") +
+              ("00" + (+currentNum + 1)).slice(-3) +
+              authUser.id;
           }
         })
         .catch((err) => setIsError(err.response?.status));
@@ -34,22 +41,27 @@ export const usePostData = () => {
         return;
       }
       if (type !== "compare") {
-        data.record = {};
         data.record.createDate = getCurrentDate;
         data.record.recordDate = getCurrentDate;
       }
       console.log(type);
       if (type === ("item" || "compare")) data.userId = authUser.id;
-      await postData(type, data).catch((err) => {
-        console.log(err.response);
-        setIsError(err.response?.status);
-      });
+      await postData(type, data)
+        .then((res) => {
+          console.log(res);
+          setId(res);
+          setIsError(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsError(err.response?.status);
+        });
       setIsLoading(false);
     };
     post();
   }, [condition, authUser]);
 
-  return [{ isLoading, isError }, setCondition];
+  return [{ id, isLoading, isError }, setCondition];
 };
 
 export default usePostData;

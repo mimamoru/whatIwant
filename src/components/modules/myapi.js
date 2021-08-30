@@ -28,12 +28,14 @@ export const getData = async (type, id = "") => {
 };
 
 //ローカルサーバーから条件指定で値を取得する
-export const selectDatas = async (type = "", param ="" ) => {
+export const selectDatas = async (type = "", param = "") => {
   const url = getUrl(type);
   //`${url}?_page=${page}&_limit=10`;
   //?title=json-server&author=typicode
   const path = `${url}${param}`;
+  console.log(path);
   const { data } = await axios.get(path);
+  console.log(data);
   return data;
 };
 
@@ -41,7 +43,9 @@ export const selectDatas = async (type = "", param ="" ) => {
 export const postData = async (type = "", data = {}) => {
   const path = getUrl(type);
   data.recordDate = getCurrentDate();
-  await axios.post(path, data);
+  const res = await axios.post(path, data);
+  console.log(res);
+  return res.data.id;
 };
 
 //ローカルサーバーの値を更新する

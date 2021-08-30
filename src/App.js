@@ -10,7 +10,7 @@ import AuthUserProvider, { useAuthUser } from "./context/AuthUserContext";
 import UserComparesProvider from "./context/UserComparesContext";
 import UserItemsProvider from "./context/UserItemsContext";
 import Home from "./components/pages/Home";
-import SignIn from "./components/pages/SignIn"; 
+import SignIn from "./components/pages/SignIn";
 import SignUp from "./components/pages/SignUp";
 import Search from "./components/pages/Search";
 import Register from "./components/pages/Register";
@@ -21,23 +21,20 @@ import Mypage from "./components/pages/Mypage";
 // PrivateRouteの実装
 const PrivateRoute = ({ ...props }) => {
   const authUser = useAuthUser();
-  const isAuthenticated = authUser != null;
+  const isAuthenticated = authUser !== null;
   if (isAuthenticated) {
     return <Route {...props} />;
   } else {
     console.log(`ログインしてください`);
-    return (
-      <Redirect
-        to={{ pathname: "/signin"  }}
-      />
-    );
+    return <Redirect to={{ pathname: "/signin" }} />;
   }
 };
 
 const UnAuthRoute = ({ ...props }) => {
   const authUser = useAuthUser();
-  const isAuthenticated = authUser != null;
-
+  const isAuthenticated =
+    authUser !== null && authUser !== undefined && authUser?.length > 0;
+  console.log(authUser);
   if (isAuthenticated) {
     console.log(`すでにログイン済みです`);
     return <Redirect to={"/mypage"} />;
@@ -56,7 +53,7 @@ const App = () => {
           <UnAuthRoute exact path="/signup" component={SignUp} />
           <UserItemsProvider>
             <UserComparesProvider>
-            <PrivateRoute path="/mypage" component={Mypage} exact />
+              <PrivateRoute path="/mypage" component={Mypage} exact />
               <PrivateRoute path="/search" component={Search} exact />
               <PrivateRoute path="/register" component={Register} exact />
               <PrivateRoute path="/edit" component={Edit} exact />

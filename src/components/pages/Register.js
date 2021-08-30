@@ -106,8 +106,7 @@ const Register = () => {
   const [{ isLoading: itPLoaging, isError: itPErr }, setItData] = usePostData();
   //比較情報登録hook
   const [{ isLoading: cpPLoaging, isError: cPErr }, setCpData] = usePostData();
-  const { items, itsLoaging, itsErr, setReroadItems } =
-    useContext(useUserItems);
+  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },

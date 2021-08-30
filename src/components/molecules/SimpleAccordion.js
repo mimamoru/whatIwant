@@ -53,18 +53,18 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     verticalAlign: "middle",
     width: 260,
-    height: 70,
+    height: 270,
   },
   details: {
     position: "absolute",
     display: "inline-block",
     width: 260,
-    top: 70,
+    top: 170,
     zIndex: 100,
     backgroundColor: "white",
   },
   heading: {
-    width: 150,
+    width: 260,
     textAlign: "center",
     verticalAlign: "middle",
     position: "relative",
@@ -79,6 +79,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const selectCompares = (compares, itemId) => {
+  if(!compares)return[];
+  console.log(compares, itemId);
   const arr = [];
   compares
     .filter((e) => itemId === e.compare[0] || itemId === e.compare[1])
@@ -108,7 +110,8 @@ const SimpleAccordion = memo(({ elm, allCondition, setActionErr }) => {
     useDeleteData();
   //比較情報取得hook
   const { compares, cpLoaging, cpErr, setReroadCompares } =
-    useContext(useUserCompares);
+  useUserCompares();
+  console.log(compares);
   // const [{ data: compares, isError: cpErr }, setCpCondition] = useSelectDatas();
   // //比較情報取得
   // useEffect(() => {
@@ -290,7 +293,7 @@ const SimpleAccordion = memo(({ elm, allCondition, setActionErr }) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <CardHeader
+          <CardHeader className={classes.heading}
             avatar={<Avatar className={classes.avatar}>{elm.id}</Avatar>}
             title={elm.name}
           />

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelectDatas } from "../components/queryhooks/index";
+import { useAuthUser } from "./AuthUserContext";
 const UserComparesContext = createContext(null);
 
 const UserComparesProvider = ({ children }) => {
@@ -13,7 +14,7 @@ const UserComparesProvider = ({ children }) => {
   //比較情報取得
   useEffect(() => {
     const fetch = () => {
-      if (reroadCompares) {
+      if (reroadCompares && useAuthUser) {
         setCpCondition({
           ...{
             type: "compare",

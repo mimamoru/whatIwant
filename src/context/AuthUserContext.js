@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import CustomizedSnackbars from "../components/atoms/CustomizedSnackbars";
 import CircularIndeterminate from "../components/atoms/CircularIndeterminate";
 import { signInErr } from "../components/modules/messages";
@@ -40,12 +46,18 @@ const AuthUserProvider = ({ children }) => {
       type: "user",
       param: `?mail=${data.mail}&password=${data.password}`,
     });
-    if (usErr) {
-      setSnackbar({ open: true, severity: "error", message: signInErr });
+  };
+
+  useEffect(() => {
+    console.log(usErr, user);
+    if (!user) {
       return;
     }
-    if (user) setAuthUser(user);
-  };
+    if (user.length===0) setSnackbar({ open: true, severity: "error", message: signInErr });
+    if (user) { 
+      setAuthUser(user);
+    }
+  }, [usErr, user]);
 
   const signout = () => {
     //ログアウト処理

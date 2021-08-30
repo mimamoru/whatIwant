@@ -91,7 +91,7 @@ const SignUp = memo(() => {
   const [{ data: user, isLoading: usLoaging, isError: usErr }, setUsCondition] =
     useSelectDatas();
   //ユーザー情報登録hook
-  const [{ isLoading: usPLoaging, isError: usPErr }, setusPData] =
+  const [{ id, isLoading: usPLoaging, isError: usPErr }, setusPData] =
     usePostData();
 
   const [formData, setFormData] = useState(null);
@@ -116,6 +116,7 @@ const SignUp = memo(() => {
 
   useEffect(() => {
     const signUpValid = () => {
+      //    console.log(formData, usErr,user);
       if (!formData) {
         return;
       }
@@ -128,33 +129,41 @@ const SignUp = memo(() => {
   }, [formData, setUsCondition]);
 
   useEffect(() => {
-   const handleSignUp = () => {
-     // console.log(formData, usErr,user);
-      if (!formData||!user) {
+    const handleSignUp = () => {
+      console.log(formData, usErr, user);
+      if (!formData || !user) {
         return;
       }
       //console.log(user.length);
-      if (user.length>0) {
+      if (user.length > 0) {
         setSnackbar({ open: true, severity: "error", message: signUpErr });
         return;
       }
-      setusPData({...{
-        type: "user",
-        data: {
-          id: null,
-          name: formData.name,
-          mail: formData.mail,
-          password: formData.password,
-          record: {
-            createDate: null,
-            recordDate: null,
+      setusPData({
+        ...{
+          type: "user",
+          data: {
+            id: null,
+            name: formData.name,
+            mail: formData.mail,
+            password: formData.password,
+            record: {
+              createDate: null,
+              recordDate: null,
+            },
           },
         },
-      }});
-      signin(formData.mail, formData.password);
+      });
     };
     handleSignUp();
-  }, [formData, setusPData, signin, usErr,user]);
+  }, [formData, setusPData, signin, usErr, user]);
+
+  useEffect(() => {
+    if (!id || !formData) {
+      return;
+    }
+    signin(formData.mail, formData.password);
+  }, [formData, id, signin]);
 
   const handlePageChange = () => {
     history.push("/signin");

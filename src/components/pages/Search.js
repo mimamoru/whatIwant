@@ -128,9 +128,11 @@ const Search = () => {
   const classes = useStyles();
   const location = useLocation();
   const [actionErr, setActionErr] = useState(true);
+  //const items = useUserItems();
 
-  const { items, itsLoaging, itsErr, setReroadItems } = useContext(useUserItems);
-  console.log();
+  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
+console.log(items)
+console.log(items, itsLoaging, itsErr)
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
@@ -187,6 +189,7 @@ const Search = () => {
 
   //金額範囲逆転チェック
   const getData = (condition) => {
+    console.log(condition)
     if (
       condition.minBudget !== null &&
       condition.maxBudget !== null &&
@@ -204,7 +207,9 @@ const Search = () => {
         condition: condition.condition,
         sortIndex: condition.sortIndex,
       };
+      console.log(items, itsLoaging, itsErr)
       setAllCondition({ ...conditions });
+     
       if (itsErr) {
         setReroadItems(true);
         setSnackbar({ open: true, severity: "error", message: err });

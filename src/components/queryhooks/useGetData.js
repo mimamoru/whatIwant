@@ -11,9 +11,10 @@ export const useGetData = () => {
 
   useEffect(() => {
     const get = async () => {
+      const { type, id } = condition;
+      if (!type) return;
       setIsError(false);
       setIsLoading(true);
-      const { type, id } = condition;
       if (authUser.id.split("U")[1] !== id.split("U")[1]) {
         setIsError(999);
         setIsLoading(false);
@@ -21,7 +22,9 @@ export const useGetData = () => {
       }
       await getData(type, id)
         .then((res) => {
-          setData(res.data);
+          console.log(res);
+          setData([...res]);
+          setIsError(false);
         })
         .catch((err) => setIsError(err.response.status));
       setIsLoading(false);

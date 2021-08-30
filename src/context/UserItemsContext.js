@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelectDatas } from "../components/queryhooks/index";
+import { useAuthUser } from "./AuthUserContext";
 const UserItemsContext = createContext(null);
 
 const UserItemsProvider = ({ children }) => {
@@ -13,7 +14,7 @@ const UserItemsProvider = ({ children }) => {
   //商品情報取得(複数)
   useEffect(() => {
     const fetch = () => {
-      if (reroadItems) {
+      if (reroadItems && useAuthUser) {
         setItCondition({
           ...{
             type: "item",
@@ -25,12 +26,14 @@ const UserItemsProvider = ({ children }) => {
     };
     fetch();
   }, [setItCondition, reroadItems]);
+
   const value = {
     items,
     itsLoaging,
     itsErr,
     setReroadItems,
   };
+
   return (
     <UserItemsContext.Provider value={value}>
       {children}

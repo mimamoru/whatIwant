@@ -10,9 +10,10 @@ export const useDeleteData = () => {
 
   useEffect(() => {
     const del = async () => {
+      const { type, id, param } = condition;
+      if(!type) return;
       setIsError(false);
       setIsLoading(true);
-      const { type, id, param } = condition;
       let paramId = id;
       if (!paramId) {
         await selectDatas(type, param)
@@ -26,7 +27,9 @@ export const useDeleteData = () => {
         setIsLoading(false);
         return;
       }
-      await deleteData(type, paramId).catch((err) =>
+      await deleteData(type, paramId).then(
+        setIsError(false)
+      ).catch((err) =>
         setIsError(err.response.status)
       );
       setIsLoading(false);
