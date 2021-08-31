@@ -11,9 +11,10 @@ export const usePutData = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const put = async () => {
-      const { type, data, decide } = condition;
+    const { type, data, decide } = condition;
       if (!type) return;
+    const put = async () => {
+      
       setIsError(false);
       setIsLoading(true);
       const id = data.id;

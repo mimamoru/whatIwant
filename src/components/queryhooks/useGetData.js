@@ -10,16 +10,16 @@ export const useGetData = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    const { type, id } = condition;
+    if (!type) return;
+    setIsError(false);
+    setIsLoading(true);
+    if (authUser.id.split("U")[1] !== id.split("U")[1]) {
+      setIsError(999);
+      setIsLoading(false);
+      return;
+    }
     const get = async () => {
-      const { type, id } = condition;
-      if (!type) return;
-      setIsError(false);
-      setIsLoading(true);
-      if (authUser.id.split("U")[1] !== id.split("U")[1]) {
-        setIsError(999);
-        setIsLoading(false);
-        return;
-      }
       await getData(type, id)
         .then((res) => {
           console.log(res);

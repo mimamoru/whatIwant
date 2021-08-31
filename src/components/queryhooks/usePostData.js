@@ -8,11 +8,15 @@ export const usePostData = () => {
   const [condition, setCondition] = useState({ type: "", data: {} });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-
+  console.log(authUser);
   useEffect(() => {
+    const { type, data } = condition;
+    console.log(data);
+    if (!type) return;
+    if ((type === "user" && authUser) || (type !== "user" && !authUser)) {
+      return;
+    }
     const post = async () => {
-      const { type, data } = condition;
-      if (!type) return;
       setIsError(false);
       setIsLoading(true);
       await selectDatas(type)
@@ -41,11 +45,11 @@ export const usePostData = () => {
         return;
       }
       if (type !== "compare") {
-        data.record.createDate = getCurrentDate;
-        data.record.recordDate = getCurrentDate;
+        data.record.createDate = data.record.recordDate = getCurrentDate();
       }
-      console.log(type);
+
       if (type === ("item" || "compare")) data.userId = authUser.id;
+      console.log(data);
       await postData(type, data)
         .then((res) => {
           console.log(res);

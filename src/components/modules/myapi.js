@@ -42,7 +42,6 @@ export const selectDatas = async (type = "", param = "") => {
 //ローカルサーバーに値を登録する
 export const postData = async (type = "", data = {}) => {
   const path = getUrl(type);
-  data.recordDate = getCurrentDate();
   const res = await axios.post(path, data);
   console.log(res);
   return res.data.id;

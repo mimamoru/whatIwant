@@ -18,7 +18,7 @@ import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 import { signUpErr } from "../modules/messages";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSignin } from "../../context/AuthUserContext";
+import { useAuthUser, useSignin } from "../../context/AuthUserContext";
 import Container from "@material-ui/core/Container";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";
@@ -73,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = memo(() => {
   const history = useHistory();
-
+  const authUser = useAuthUser();
+  console.log(authUser);
   const {
     control,
     handleSubmit,
@@ -115,11 +116,11 @@ const SignUp = memo(() => {
   );
 
   useEffect(() => {
+    //    console.log(formData, usErr,user);
+    if (!formData) {
+      return;
+    }
     const signUpValid = () => {
-      //    console.log(formData, usErr,user);
-      if (!formData) {
-        return;
-      }
       setUsCondition({
         type: "user",
         param: `?mail=${formData.mail}`,
@@ -129,41 +130,44 @@ const SignUp = memo(() => {
   }, [formData, setUsCondition]);
 
   useEffect(() => {
-    const handleSignUp = () => {
+    console.log(formData, usErr, user);
+    if (!formData || !user || (authUser && authUser.length === 1)) {
       console.log(formData, usErr, user);
-      if (!formData || !user) {
-        return;
-      }
-      //console.log(user.length);
+      return;
+    }
+    const handleSignUp = () => {
+      console.log(user.length);
       if (user.length > 0) {
         setSnackbar({ open: true, severity: "error", message: signUpErr });
         return;
-      }
-      setusPData({
-        ...{
-          type: "user",
-          data: {
-            id: null,
-            name: formData.name,
-            mail: formData.mail,
-            password: formData.password,
-            record: {
-              createDate: null,
-              recordDate: null,
+      } else {
+        setusPData({
+          ...{
+            type: "user",
+            data: {
+              id: null,
+              name: formData.name,
+              mail: formData.mail,
+              password: formData.password,
+              record: {
+                createDate: "",
+                recordDate: "",
+              },
             },
           },
-        },
-      });
+        });
+      }
     };
     handleSignUp();
-  }, [formData, setusPData, signin, usErr, user]);
+  }, [formData, setusPData, authUser, signin, usErr, user]);
 
   useEffect(() => {
-    if (!id || !formData) {
+    if (!id || !formData || (authUser && authUser.length === 1)) {
       return;
     }
+    console.log(formData.mail, formData.password);
     signin(formData.mail, formData.password);
-  }, [formData, id, signin]);
+  }, [formData, authUser, id, signin]);
 
   const handlePageChange = () => {
     history.push("/signin");

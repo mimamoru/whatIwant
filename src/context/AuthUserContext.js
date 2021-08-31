@@ -40,11 +40,13 @@ const AuthUserProvider = ({ children }) => {
     [snackbar]
   );
 
-  const signin = (data) => {
+  const signin = (mail, password) => {
     //ログイン処理 DB照合
     setUsCondition({
-      type: "user",
-      param: `?mail=${data.mail}&password=${data.password}`,
+      ...{
+        type: "user",
+        param: `?mail=${mail}&password=${password}`,
+      },
     });
   };
 
@@ -53,9 +55,10 @@ const AuthUserProvider = ({ children }) => {
     if (!user) {
       return;
     }
-    if (user.length===0) setSnackbar({ open: true, severity: "error", message: signInErr });
-    if (user) { 
-      setAuthUser(user);
+    if (user.length === 1) {
+      setAuthUser([...user]);
+    } else {
+      setSnackbar({ open: true, severity: "error", message: signInErr });
     }
   }, [usErr, user]);
 

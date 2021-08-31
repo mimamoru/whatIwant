@@ -86,7 +86,7 @@ const SignIn = memo(() => {
         <Typography component="h1" variant="h5">
           ようこそ
         </Typography>
-        <form onSubmit={handleSubmit((data) => signin(data))} className="form">
+        <form onSubmit={handleSubmit((data) => signin(data.mail,data.password))} className="form">
           <Controller
             control={control}
             name="mail"
