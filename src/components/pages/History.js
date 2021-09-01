@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useCallback,useContext } from "react";
-import GenericTemplate from "../modules/GenericTemplate";
+import GenericTemplate from "../molecules/GenericTemplate";
 import { makeStyles } from "@material-ui/core/styles";
 import { DataGrid } from "@material-ui/data-grid";
 import Paper from "@material-ui/core/Paper";

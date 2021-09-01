@@ -130,17 +130,22 @@ const SignUp = memo(() => {
   }, [formData, setUsCondition]);
 
   useEffect(() => {
-    console.log(formData, usErr, user);
+    console.log(formData, authUser, user);
+    let unmounted = false;
     if (!formData || !user || (authUser && authUser.length === 1)) {
-      console.log(formData, usErr, user);
+      console.log(formData, user);
+      unmounted = true;
       return;
     }
+    console.log(user);
+    if (user.length > 0) {
+      setSnackbar({ open: true, severity: "error", message: signUpErr });
+      unmounted = true;
+      return;
+    }
+   
     const handleSignUp = () => {
-      console.log(user.length);
-      if (user.length > 0) {
-        setSnackbar({ open: true, severity: "error", message: signUpErr });
-        return;
-      } else {
+      if (!unmounted) {
         setusPData({
           ...{
             type: "user",
@@ -159,7 +164,11 @@ const SignUp = memo(() => {
       }
     };
     handleSignUp();
-  }, [formData, setusPData, authUser, signin, usErr, user]);
+    // clean up関数（Unmount時の処理）
+    return () => {
+      unmounted = true;
+    };
+  }, [formData, setusPData, authUser, signin, user]);
 
   useEffect(() => {
     if (!id || !formData || (authUser && authUser.length === 1)) {

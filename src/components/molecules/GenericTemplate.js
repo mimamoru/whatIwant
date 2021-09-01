@@ -12,9 +12,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useAuthUser, useSignout } from "../../context/AuthUserContext";
 import { listItems } from "../modules/listItems";
-
+import ConfirmDialog from "../atoms/ConfirmDialog";
+import { confirmSignOut } from "../modules/messages";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -99,12 +101,22 @@ const useStyles = makeStyles((theme) => ({
 //アプリの大枠　テンプレート使用
 const GenericTemplate = (props) => {
   const classes = useStyles();
+  const authUser = useAuthUser();
+  const signout = useSignout();
+  console.log(authUser)
+  //authUser[0].id
   const [open, setOpen] = React.useState(true);
+  //確認ダイアログメッセージののメッセージの状態管理
+  const [confDlg, setConfDlg] = React.useState("");
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSignOut = () => {
+    signout();
   };
 
   return (
@@ -134,8 +146,21 @@ const GenericTemplate = (props) => {
             noWrap
             className={classes.title}
           >
-            Teach Me!
+           What I Want...?
           </Typography>
+          <Typography
+            component="h5"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.user}
+          >
+            {authUser&&authUser[0].name}
+          </Typography>
+         
+          <IconButton onClick={() => setConfDlg("signout")} color="inherit">
+            <ExitToAppIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -155,6 +180,14 @@ const GenericTemplate = (props) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+        <ConfirmDialog
+          msg={confirmSignOut}
+          isOpen={confDlg === "signout"}
+          doYes={handleSignOut}
+          doNo={() => {
+            setConfDlg("");
+          }}
+        />
         <Container maxWidth="lg" className={classes.container}>
           <Typography
             component="h2"

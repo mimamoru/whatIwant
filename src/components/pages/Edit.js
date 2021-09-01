@@ -13,7 +13,7 @@ import CircularIndeterminate from "../atoms/CircularIndeterminate";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";
 
-import GenericTemplate from "../modules/GenericTemplate";
+import GenericTemplate from "../molecules/GenericTemplate";
 import {
   getCurrentDate,
 } from "../modules/myapi";

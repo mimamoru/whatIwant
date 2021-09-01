@@ -39,7 +39,6 @@ import {
   confirmPurchase,
   confirmCancel,
 } from "../modules/messages";
-import TouchRipple from "@material-ui/core/ButtonBase/TouchRipple";
 
 const useStyles = makeStyles((theme) => ({
   root: {

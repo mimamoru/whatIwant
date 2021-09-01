@@ -55,7 +55,7 @@ const AuthUserProvider = ({ children }) => {
     if (!user) {
       return;
     }
-    if (user.length === 1) {
+    if (user.length >0) {
       setAuthUser([...user]);
     } else {
       setSnackbar({ open: true, severity: "error", message: signInErr });

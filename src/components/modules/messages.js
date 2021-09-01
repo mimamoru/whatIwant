@@ -15,3 +15,4 @@ export const confirmDelete = "商品を削除します。\nよろしいですか
 export const confirmPurchase = "商品の購入を記録します。\nよろしいですか。";
 export const confirmCancel =
   "商品の購入キャンセルを記録します。\nよろしいですか。";
+export const confirmSignOut = "アプリを終了します。\nよろしいですか。";

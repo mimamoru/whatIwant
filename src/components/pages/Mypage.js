@@ -6,9 +6,10 @@ import { useUserItems } from "../../context/UserItemsContext";
 import { useUserCompares } from "../../context/UserComparesContext";
 import { getData } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
-import GenericTemplate from "../modules/GenericTemplate";
+import GenericTemplate from "../molecules/GenericTemplate";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import { LineChart, Line, XAxis, CartesianGrid, Legend, YAxis } from "recharts";
 import mainimg from "../../images/mainimg.jpg"; 
 
 const useStyles = makeStyles((theme) => ({

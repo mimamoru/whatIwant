@@ -13,7 +13,7 @@ import { BaseYup } from "../modules/localeJP";
 import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 
 import CircularIndeterminate from "../atoms/CircularIndeterminate";
-import GenericTemplate from "../modules/GenericTemplate";
+import GenericTemplate from "../molecules/GenericTemplate";
 import {
   getCurrentDate,
 } from "../modules/myapi";
@@ -163,12 +163,12 @@ const Register = () => {
   //登録処理
   async function handleRegister(data) {
     const { postItemData, postCompareData } = postData(data);
-    setItData(...{ type: "item", data: postItemData });
+    setItData({ type: "item", data: postItemData });
     if (itsErr) {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
-    setCpData(...{ type: "compare", data: postCompareData });
+    setCpData({ type: "compare", data: postCompareData });
     if (cPErr) {
       setSnackbar({ open: true, severity: "error", message: err });
       return;

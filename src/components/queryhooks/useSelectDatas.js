@@ -29,11 +29,6 @@ export const useSelectDatas = () => {
           : `?userId=${authUser[0].id}`;
       }
     }
-    if (!con) {
-      setIsLoading(false);
-      setIsError(999);
-      return;
-    }
     const select = async () => {
       console.log(type, con);
       await selectDatas(type, con)

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import HistoryOutlinedIcon from "@material-ui/icons/HistoryOutlined";
 import QueueIcon from "@material-ui/icons/Queue";
-
+import HomeIcon from '@material-ui/icons/Home';
 const current = {
   color: "blue",
   textDecoration: "underline",
@@ -17,7 +17,7 @@ export const listItems = (
      <Link exact="true" to="/mypage" activestyle={current}>
       <ListItem button>
         <ListItemIcon>
-          <SearchOutlinedIcon />
+          <HomeIcon />
         </ListItemIcon>
         <ListItemText primary="マイページ" />
       </ListItem>
