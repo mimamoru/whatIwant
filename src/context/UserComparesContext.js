@@ -2,6 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelectDatas } from "../components/queryhooks/index";
 import { useAuthUser } from "./AuthUserContext";
 const UserComparesContext = createContext(null);
+const UserReroadComparesContext = createContext({
+  reroadCompare: (_) => console.error("設定されていません"),
+});
 
 const UserComparesProvider = ({ children }) => {
   //比較情報取得hook
@@ -10,6 +13,11 @@ const UserComparesProvider = ({ children }) => {
     setCpCondition,
   ] = useSelectDatas();
   const [reroadCompares, setReroadCompares] = useState(true);
+
+  const reroadCompare = () => {
+    //リロード処理
+    setReroadCompares(true);
+  };
 
   //比較情報取得
   useEffect(() => {
@@ -27,15 +35,18 @@ const UserComparesProvider = ({ children }) => {
     compares,
     cpLoaging,
     cpErr,
-    setReroadCompares,
   };
   return (
-    <UserComparesContext.Provider value={value}>
-      {children}
-    </UserComparesContext.Provider>
+    <UserReroadComparesContext.Provider value={reroadCompare}>
+      <UserComparesContext.Provider value={value}>
+        {children}
+      </UserComparesContext.Provider>
+    </UserReroadComparesContext.Provider>
   );
 };
 
-export const useUserCompares = () => useContext(UserComparesContext);
+export const useUserComparesContext = () => useContext(UserComparesContext);
+export const useReroadComparesContext = () =>
+  useContext(UserReroadComparesContext);
 
 export default UserComparesProvider;

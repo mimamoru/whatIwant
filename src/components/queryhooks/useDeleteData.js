@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { deleteData, selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
+import { useUserItems } from "../../context/useReroadItemsContext";
+import { useUserCompares } from "../../context/useReroadComparesContext";
 
 export const useDeleteData = () => {
   const authUser = useAuthUser();
+  const reroadItem = useUserItems();
+  const reroadCompare = useUserCompares();
+
   const [condition, setCondition] = useState({ type: "", param: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -22,18 +27,20 @@ export const useDeleteData = () => {
           })
           .catch((err) => setIsError(err.response.status));
       }
-      if (authUser.id.split("U")[1] !== paramId.split("U")[1]) {
-        setIsError(999);
+      console.log(paramId);
+      if (paramId) {
+        await deleteData(type, paramId)
+          .then(() => {
+            setIsError(false);
+            if (type === "item") reroadItem();
+            if (type === "compare") reroadCompare();
+          })
+          .catch((err) => setIsError(err.response.status));
         setIsLoading(false);
-        return;
       }
-      await deleteData(type, paramId)
-        .then(setIsError(false))
-        .catch((err) => setIsError(err.response.status));
-      setIsLoading(false);
     };
     del();
-  }, [condition, authUser]);
+  }, [condition, authUser, reroadItem, reroadCompare]);
 
   return [{ isLoading, isError }, setCondition];
 };

@@ -14,14 +14,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";
 
 import GenericTemplate from "../molecules/GenericTemplate";
-import {
-  getCurrentDate,
-} from "../modules/myapi";
-import {
-  useDeleteData,
-  usePostData,
-  usePutData,
-} from "../queryhooks/index";
+import { getCurrentDate } from "../modules/myapi";
+import { useDeleteData, usePostData, usePutData } from "../queryhooks/index";
 import { err, edit, change } from "../modules/messages";
 
 //バリデーションの指定
@@ -114,7 +108,7 @@ const Edit = () => {
   const condition = location.state.condition;
   const itemInfo = location.state.itemInfo;
   //const items = useUserItems();
-  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
+  const { items, itsLoaging, itsErr } = useUserItems();
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
@@ -129,8 +123,7 @@ const Edit = () => {
   const [{ isLoading: cpDLoaging, isError: cpDErr }, setCpDData] =
     useDeleteData();
   //比較情報取得
-  const { compares, cpLoaging, cpErr, setReroadCompares } =
-    useContext(useUserCompares);
+  const { compares, cpLoaging, cpErr } = useContext(useUserCompares);
 
   // //比較情報を取得
   // if (cpErr) {
@@ -144,7 +137,6 @@ const Edit = () => {
   useEffect(() => {
     if (cpLoaging) return;
     if (cpErr) {
-      setReroadCompares(true);
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
@@ -154,7 +146,7 @@ const Edit = () => {
       .filter((e) => compareArr.indexOf(e.id) !== -1)
       .map((e) => ({ value: e.id, label: `${e.id}:${e.name}` }));
     setSelectedOptions(...option);
-  }, [compares, cpErr, cpLoaging, itemInfo.id, items, setReroadCompares]);
+  }, [compares, cpErr, cpLoaging, itemInfo.id, items]);
 
   //FORMデフォルト値の指定
   const defaultValues = {
@@ -201,7 +193,6 @@ const Edit = () => {
   useEffect(() => {
     if (itsLoaging) return;
     if (itsErr) {
-      setReroadItems(true);
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
@@ -212,7 +203,7 @@ const Edit = () => {
         label: `${e.id}:${e.name}`,
       }));
     setOptions(...option);
-  }, [items, itsErr, itsLoaging, setReroadItems]);
+  }, [items, itsErr, itsLoaging]);
 
   const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const handleBack = () => {

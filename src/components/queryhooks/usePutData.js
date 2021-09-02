@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { putData, getCurrentDate, getData } from "../modules/myapi";
+import { useUserItems } from "../../context/useReroadItemsContext";
+import { useUserCompares } from "../../context/useReroadComparesContext";
 
 export const usePutData = () => {
+  const reroadItem = useUserItems();
+  const reroadCompare = useUserCompares();
+
   const [condition, setCondition] = useState({
     type: "",
     data: {},
@@ -12,9 +17,8 @@ export const usePutData = () => {
 
   useEffect(() => {
     const { type, data, decide } = condition;
-      if (!type) return;
+    if (!type) return;
     const put = async () => {
-      
       setIsError(false);
       setIsLoading(true);
       const id = data.id;
@@ -28,24 +32,28 @@ export const usePutData = () => {
         setIsError("notFound");
         setIsLoading(false);
         return;
-      }
-      if (currentData.record?.recordDate !== data.record?.recordDate) {
+      } else if (currentData.record?.recordDate !== data.record?.recordDate) {
         setIsError("changed");
         setIsLoading(false);
         return;
+      } else {
+        const currentTime = getCurrentDate();
+        data.record.recordDate = currentTime;
+        if (decide) {
+          data.record.decideDate = currentTime;
+        }
+        await putData(type, data.id, data)
+          .then(() => {
+            if (type === "item") reroadItem();
+            if (type === "compare") reroadCompare();
+            setIsError(false);
+          })
+          .catch((err) => setIsError(err.response.status));
       }
-      const currentTime = getCurrentDate;
-      data.record.recordDate = currentTime;
-      if (decide) {
-        data.record.decideDate = currentTime;
-      }
-      await putData(type, data.id, data).catch((err) =>
-        setIsError(err.response.status)
-      );
       setIsLoading(false);
     };
     put();
-  }, [condition]);
+  }, [condition, reroadItem, reroadCompare]);
 
   return [{ isLoading, isError }, setCondition];
 };

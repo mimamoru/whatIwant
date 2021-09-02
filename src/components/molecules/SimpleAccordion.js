@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const selectCompares = (compares, itemId) => {
-  if(!compares)return[];
+  if (!compares) return [];
   console.log(compares, itemId);
   const arr = [];
   compares
@@ -108,8 +108,7 @@ const SimpleAccordion = memo(({ elm, allCondition, setActionErr }) => {
   const [{ isLoading: itDLoaging, isError: itDErr }, setItDId] =
     useDeleteData();
   //比較情報取得hook
-  const { compares, cpLoaging, cpErr, setReroadCompares } =
-  useUserCompares();
+  const { compares, cpLoaging, cpErr } = useUserCompares();
   console.log(compares);
   // const [{ data: compares, isError: cpErr }, setCpCondition] = useSelectDatas();
   // //比較情報取得
@@ -165,7 +164,6 @@ const SimpleAccordion = memo(({ elm, allCondition, setActionErr }) => {
       return;
     }
 
- 
     //検索条件と取得した情報をパラメータとして編集画面に遷移する
     history.push("/edit", {
       condition: allCondition,
@@ -292,7 +290,8 @@ const SimpleAccordion = memo(({ elm, allCondition, setActionErr }) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <CardHeader className={classes.heading}
+          <CardHeader
+            className={classes.heading}
             avatar={<Avatar className={classes.avatar}>{elm.id}</Avatar>}
             title={elm.name}
           />

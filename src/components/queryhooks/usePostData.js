@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { postData, getCurrentDate, selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
+import { useUserItems } from "../../context/useReroadItemsContext";
+import { useUserCompares } from "../../context/useReroadComparesContext";
 
 export const usePostData = () => {
   const authUser = useAuthUser();
+  const reroadItem = useUserItems();
+  const reroadCompare = useUserCompares();
+
   const [id, setId] = useState(null);
   const [condition, setCondition] = useState({ type: "", data: {} });
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +67,8 @@ export const usePostData = () => {
           .then((res) => {
             console.log(res);
             setId(res);
+            if (type === "item") reroadItem();
+            if (type === "compare") reroadCompare();
             setIsError(false);
           })
           .catch((err) => {

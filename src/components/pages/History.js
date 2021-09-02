@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useCallback,useContext } from "react";
+import { React, useState, useEffect, useCallback, useContext } from "react";
 import GenericTemplate from "../molecules/GenericTemplate";
 import { makeStyles } from "@material-ui/core/styles";
 import { DataGrid } from "@material-ui/data-grid";
@@ -12,9 +12,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import BlockOutlinedIcon from "@material-ui/icons/BlockOutlined";
 import ReactSelect from "react-select";
 import { err } from "../modules/messages";
-import {
-  getCurrentDate,
-} from "../modules/myapi";
+import { getCurrentDate } from "../modules/myapi";
 import { useUserItems } from "../../context/UserItemsContext";
 const useStyles = makeStyles((theme) => ({
   absolute: {
@@ -79,7 +77,7 @@ const History = () => {
   const [cancelHistory, setCancelHistory] = useState([]);
   const [buyHistoryRows, setBuyHistoryRows] = useState([]);
   const [cancelHistoryRows, setCancelHistoryRows] = useState([]);
-  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
+  const { items, itsLoaging, itsErr } = useUserItems();
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
@@ -119,7 +117,6 @@ const History = () => {
     const fetchData = () => {
       if (itsLoaging) return;
       if (itsErr) {
-        setReroadItems(true);
         setSnackbar({ open: true, severity: "error", message: err });
         return;
       }
@@ -153,7 +150,7 @@ const History = () => {
       }
     };
     fetchData();
-  }, [tabValue, items, itsErr, itsLoaging, setReroadItems]);
+  }, [tabValue, items, itsErr, itsLoaging]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);

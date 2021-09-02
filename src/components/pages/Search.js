@@ -131,7 +131,7 @@ const Search = () => {
   const [actionErr, setActionErr] = useState(true);
   //const items = useUserItems();
 
-  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
+  const { items, itsLoaging, itsErr } = useUserItems();
   console.log(items);
   console.log(items, itsLoaging, itsErr);
   // //商品情報取得hook(複数)
@@ -212,7 +212,6 @@ const Search = () => {
       setAllCondition({ ...conditions });
 
       if (itsErr) {
-        setReroadItems(true);
         setSnackbar({ open: true, severity: "error", message: err });
         return;
       }

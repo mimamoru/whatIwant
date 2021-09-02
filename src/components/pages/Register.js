@@ -104,7 +104,7 @@ const Register = () => {
   const [{ isLoading: itPLoaging, isError: itPErr }, setItData] = usePostData();
   //比較情報登録hook
   const [{ isLoading: cpPLoaging, isError: cPErr }, setCpData] = usePostData();
-  const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
+  const { items, itsLoaging, itsErr } = useUserItems();
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
@@ -145,7 +145,6 @@ const Register = () => {
   useEffect(() => {
     if (!items) return;
     if (itsErr) {
-      setReroadItems(true);
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
@@ -156,7 +155,7 @@ const Register = () => {
         label: `${e.id}:${e.name}`,
       }));
     setOptions(...option);
-  }, [itsLoaging, itsErr, setReroadItems, items]);
+  }, [itsLoaging, itsErr, items]);
 
   //登録処理
   async function handleRegister(data) {
