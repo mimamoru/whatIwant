@@ -43,10 +43,8 @@ const AuthUserProvider = ({ children }) => {
   const signin = (mail, password) => {
     //ログイン処理 DB照合
     setUsCondition({
-      ...{
-        type: "user",
-        param: `?mail=${mail}&password=${password}`,
-      },
+      type: "user",
+      param: `?mail=${mail}&password=${password}`,
     });
   };
 
@@ -55,8 +53,8 @@ const AuthUserProvider = ({ children }) => {
     if (!user) {
       return;
     }
-    if (user.length >0) {
-      setAuthUser([...user]);
+    if (user.length > 0) {
+      setAuthUser(() => user);
     } else {
       setSnackbar({ open: true, severity: "error", message: signInErr });
     }

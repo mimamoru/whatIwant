@@ -52,6 +52,7 @@ const SelectItems = (
   items,
   { itemId, itemName, minBudget, maxBudget, keyword, condition, sortIndex }
 ) => {
+  if (!items) return;
   const keywords = keyword ? keyword.split(/\s+/) : "";
   let result = items
     .filter((e) => e.record?.decideDate === null)
@@ -131,8 +132,8 @@ const Search = () => {
   //const items = useUserItems();
 
   const { items, itsLoaging, itsErr, setReroadItems } = useUserItems();
-console.log(items)
-console.log(items, itsLoaging, itsErr)
+  console.log(items);
+  console.log(items, itsLoaging, itsErr);
   // //商品情報取得hook(複数)
   // const [
   //   { data: items, isLoading: itsLoaging, isError: itsErr },
@@ -157,7 +158,7 @@ console.log(items, itsLoaging, itsErr)
     ? location.state.condition
     : defaultValues;
   //検索条件の管理
-  const [allCondition, setAllCondition] = useState({ ...paramCondition });
+  const [allCondition, setAllCondition] = useState({ paramCondition });
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -189,7 +190,7 @@ console.log(items, itsLoaging, itsErr)
 
   //金額範囲逆転チェック
   const getData = (condition) => {
-    console.log(condition)
+    console.log(condition);
     if (
       condition.minBudget !== null &&
       condition.maxBudget !== null &&
@@ -207,9 +208,9 @@ console.log(items, itsLoaging, itsErr)
         condition: condition.condition,
         sortIndex: condition.sortIndex,
       };
-      console.log(items, itsLoaging, itsErr)
+      console.log(items, itsLoaging, itsErr);
       setAllCondition({ ...conditions });
-     
+
       if (itsErr) {
         setReroadItems(true);
         setSnackbar({ open: true, severity: "error", message: err });

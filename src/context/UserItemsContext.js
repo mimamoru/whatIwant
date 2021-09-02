@@ -16,10 +16,8 @@ const UserItemsProvider = ({ children }) => {
     const fetch = () => {
       if (reroadItems && useAuthUser) {
         setItCondition({
-          ...{
-            type: "item",
-            param: "&delete=false",
-          },
+          type: "item",
+          param: "&delete=false",
         });
         setReroadItems(false);
       }

@@ -29,86 +29,6 @@
         "createDate": "2020-11-5",
         "recordDate": "2020-12-5"
       }
-    },
-    {
-      "id": "U004",
-      "name": "jjjj",
-      "mail": "abcd@gmail.com",
-      "password": "Pass@123",
-      "record": {
-        "createDate": "2021-8-31 22:37:58",
-        "recordDate": "2021-8-31 22:37:58"
-      }
-    },
-    {
-      "id": "U005",
-      "name": "momo",
-      "mail": "ppp@ppp.ppp",
-      "password": "Pass@123",
-      "record": {
-        "createDate": "2021-9-1 23:15:22",
-        "recordDate": "2021-9-1 23:15:22"
-      }
-    },
-    {
-      "id": "U006",
-      "name": "momo",
-      "mail": "ppp@ppp.ppp",
-      "password": "Pass@123",
-      "record": {
-        "createDate": "2021-9-1 23:15:22",
-        "recordDate": "2021-9-1 23:15:22"
-      }
-    },
-    {
-      "id": "U007",
-      "name": "coco",
-      "mail": "lll@lll.lll",
-      "password": "Pass@000",
-      "record": {
-        "createDate": "2021-9-1 23:15:22",
-        "recordDate": "2021-9-1 23:15:22"
-      }
-    },
-    {
-      "id": "U008",
-      "name": "coco",
-      "mail": "lll@lll.lll",
-      "password": "Pass@000",
-      "record": {
-        "createDate": "2021-9-1 23:15:22",
-        "recordDate": "2021-9-1 23:15:22"
-      }
-    },
-    {
-      "id": "U009",
-      "name": "coco",
-      "mail": "lll@lll.lll",
-      "password": "Pass@000",
-      "record": {
-        "createDate": "2021-9-1 23:15:22",
-        "recordDate": "2021-9-1 23:15:22"
-      }
-    },
-    {
-      "id": "U010",
-      "name": "mｍｍ",
-      "mail": "mmm@mmm.mmm",
-      "password": "Pass@123",
-      "record": {
-        "createDate": "2021-9-1 23:48:40",
-        "recordDate": "2021-9-1 23:48:40"
-      }
-    },
-    {
-      "id": "U011",
-      "name": "mｍｍ",
-      "mail": "mmm@mmm.mmm",
-      "password": "Pass@123",
-      "record": {
-        "createDate": "2021-9-1 23:48:40",
-        "recordDate": "2021-9-1 23:48:40"
-      }
     }
   ],
   "items": [
@@ -257,10 +177,10 @@
       "userId": "U001"
     },
     {
-      "id": "ITNaNundefined",
-      "name": "kkk",
-      "budget": 7999,
-      "limit": "2021-09-22T15:00:00.000Z",
+      "id": "IT001U003",
+      "name": "aaa",
+      "budget": 1234,
+      "limit": "2021-09-08T15:00:00.000Z",
       "level": 50,
       "url": "",
       "remark": "",
@@ -269,9 +189,10 @@
         "qty": null,
         "cost": null,
         "decideDate": null,
-        "createDate": "2021-9-1 23:48:40",
-        "recordDate": "2021-9-1 23:48:40"
-      }
+        "createDate": "2021-9-2 23:40:17",
+        "recordDate": "2021-9-2 23:40:17"
+      },
+      "userId": "U003"
     }
   ],
   "compares": [

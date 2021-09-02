@@ -120,44 +120,49 @@ const SignUp = memo(() => {
     if (!formData) {
       return;
     }
+    let unmounted = false;
     const signUpValid = () => {
-      setUsCondition({
-        type: "user",
-        param: `?mail=${formData.mail}`,
-      });
+      if (!unmounted) {
+        setUsCondition({
+          type: "user",
+          param: `?mail=${formData.mail}`,
+        });
+      }
     };
     signUpValid();
+    // clean up関数（Unmount時の処理）
+    return () => {
+      unmounted = true;
+    };
   }, [formData, setUsCondition]);
 
   useEffect(() => {
-    console.log(formData, authUser, user);
+    // console.log(formData, authUser, user);
+    if (!user) return;
     let unmounted = false;
-    if (!formData || !user || (authUser && authUser.length === 1)) {
-      console.log(formData, user);
-      unmounted = true;
-      return;
-    }
+    // if (!formData || !user || (authUser && authUser.length === 1)) {
+    //   console.log(formData, user);
+    //   unmounted = true;
+    //   return;
+    // }
     console.log(user);
-    if (user.length > 0) {
+    if (user && user.length > 0) {
       setSnackbar({ open: true, severity: "error", message: signUpErr });
       unmounted = true;
       return;
     }
-   
     const handleSignUp = () => {
       if (!unmounted) {
         setusPData({
-          ...{
-            type: "user",
-            data: {
-              id: null,
-              name: formData.name,
-              mail: formData.mail,
-              password: formData.password,
-              record: {
-                createDate: "",
-                recordDate: "",
-              },
+          type: "user",
+          data: {
+            id: null,
+            name: formData.name,
+            mail: formData.mail,
+            password: formData.password,
+            record: {
+              createDate: "",
+              recordDate: "",
             },
           },
         });
@@ -168,15 +173,15 @@ const SignUp = memo(() => {
     return () => {
       unmounted = true;
     };
-  }, [formData, setusPData, authUser, signin, user]);
+  }, [user, formData, setusPData]);
 
   useEffect(() => {
-    if (!id || !formData || (authUser && authUser.length === 1)) {
+    if (!id) {
       return;
     }
     console.log(formData.mail, formData.password);
     signin(formData.mail, formData.password);
-  }, [formData, authUser, id, signin]);
+  }, [formData, id, signin]);
 
   const handlePageChange = () => {
     history.push("/signin");

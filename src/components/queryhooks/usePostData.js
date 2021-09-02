@@ -12,6 +12,7 @@ export const usePostData = () => {
   useEffect(() => {
     const { type, data } = condition;
     console.log(data);
+    console.log("type" + type, "authUser" + authUser);
     if (!type || !data) return;
     if ((type === "user" && authUser) || (type !== "user" && !authUser)) {
       return;
@@ -21,8 +22,10 @@ export const usePostData = () => {
       setIsError(false);
       setIsLoading(true);
       if (!unmounted) {
-        await selectDatas(type)
+        const param = type === "user" ? "" : `?userId=${authUser[0].id}`;
+        await selectDatas(type, param)
           .then((res) => {
+            console.log("res", res, type);
             const response = res;
             if (type === "user") {
               const currentNum =
@@ -32,16 +35,18 @@ export const usePostData = () => {
               data.id = "U" + ("00" + (+currentNum + 1)).slice(-3);
             } else {
               const currentNum =
-                response === []
+                response.length === 0
                   ? 0
-                  : +response[response.length - 1].id.split("U")[0];
+                  : +response[response.length - 1].id.split("U")[0].slice(-3);
+              console.log("currentNum", currentNum, +currentNum + 1);
               data.id =
                 (type === "item" ? "IT" : "CP") +
                 ("00" + (+currentNum + 1)).slice(-3) +
-                authUser.id;
+                authUser[0].id;
             }
           })
           .catch((err) => setIsError(err.response?.status));
+        console.log("id", data.id);
         if (!data.id) {
           setIsLoading(false);
           setIsError(true);
@@ -51,7 +56,7 @@ export const usePostData = () => {
           data.record.createDate = data.record.recordDate = getCurrentDate();
         }
 
-        if (type === ("item" || "compare")) data.userId = authUser.id;
+        if (type === ("item" || "compare")) data.userId = authUser[0].id;
         console.log(data);
         await postData(type, data)
           .then((res) => {

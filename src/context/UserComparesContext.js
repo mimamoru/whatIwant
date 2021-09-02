@@ -16,9 +16,7 @@ const UserComparesProvider = ({ children }) => {
     const fetch = () => {
       if (reroadCompares && useAuthUser) {
         setCpCondition({
-          ...{
-            type: "compare",
-          },
+          type: "compare",
         });
         setReroadCompares(false);
       }

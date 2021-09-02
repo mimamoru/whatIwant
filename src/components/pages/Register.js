@@ -14,9 +14,7 @@ import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 
 import CircularIndeterminate from "../atoms/CircularIndeterminate";
 import GenericTemplate from "../molecules/GenericTemplate";
-import {
-  getCurrentDate,
-} from "../modules/myapi";
+import { getCurrentDate } from "../modules/myapi";
 import { useSelectDatas, usePostData } from "../queryhooks/index";
 import { err, register } from "../modules/messages";
 
@@ -145,7 +143,7 @@ const Register = () => {
   const [options, setOptions] = useState([]);
   //セレクトボックスのプルダウンメニューを設定
   useEffect(() => {
-    if (itsLoaging) return;
+    if (!items) return;
     if (itsErr) {
       setReroadItems(true);
       setSnackbar({ open: true, severity: "error", message: err });

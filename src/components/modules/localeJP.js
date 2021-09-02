@@ -8,7 +8,7 @@ const localeJP = {
   string: {
     min: "【${path}】${min}文字以上で指定してください",
     max: "【${path}】${max}文字以下で指定してください",
-    url: "【${path}は有効なURLを指定してください",
+    url: "【${path}】有効なURLを指定してください",
     email: "【${path}】正しい形式で指定してください",
     password: "【${path}】正しい形式で指定してください",
     match: "【${path}】半角英数字で指定してください",
