@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { putData, getCurrentDate, getData } from "../modules/myapi";
-import { useUserItems } from "../../context/useReroadItemsContext";
-import { useUserCompares } from "../../context/useReroadComparesContext";
+import { useReroadItems } from "../../context/UserItemsContext";
+import { useReroadCompares } from "../../context/UserComparesContext";
+import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePutData = () => {
-  const reroadItem = useUserItems();
-  const reroadCompare = useUserCompares();
+  const authUser = useAuthUser();
+  const reroadItem = useReroadItems();
+  const reroadCompare = useReroadCompares();
+  const [id, setId] = useState(null);
 
   const [condition, setCondition] = useState({
-    type: "",
-    data: {},
+    type: null,
+    data: null,
     decide: false,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -17,45 +20,62 @@ export const usePutData = () => {
 
   useEffect(() => {
     const { type, data, decide } = condition;
-    if (!type) return;
+    if (!type || id) return;
+    let unmounted = false;
     const put = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      const id = data.id;
-      let currentData;
-      await getData(type, id)
-        .then((res) => {
-          currentData = res;
-        })
-        .catch((err) => setIsError(err.response.status));
-      if (!currentData) {
-        setIsError("notFound");
-        setIsLoading(false);
-        return;
-      } else if (currentData.record?.recordDate !== data.record?.recordDate) {
-        setIsError("changed");
-        setIsLoading(false);
-        return;
-      } else {
-        const currentTime = getCurrentDate();
-        data.record.recordDate = currentTime;
-        if (decide) {
-          data.record.decideDate = currentTime;
-        }
-        await putData(type, data.id, data)
-          .then(() => {
-            if (type === "item") reroadItem();
-            if (type === "compare") reroadCompare();
-            setIsError(false);
+      if (!unmounted) {
+        setIsError(false);
+        setIsLoading(true);
+        const paramIid = data.id;
+        let currentData;
+        await getData(type, paramIid)
+          .then((res) => {
+            currentData = res;
           })
           .catch((err) => setIsError(err.response.status));
+        if (!currentData) {
+          setIsError("notFound");
+          setIsLoading(false);
+          return;
+        } else if (data.record !== undefined) {
+          if (currentData.record?.recordDate !== data.record?.recordDate) {
+            setIsError("changed");
+            setIsLoading(false);
+            return;
+          }
+          const currentTime = getCurrentDate();
+          data.record.recordDate = currentTime;
+          if (decide) {
+            data.record.decideDate = currentTime;
+          }
+          if (type === "item" || type === "compare")
+            data.userId = authUser[0].id;
+          await putData(type, data.id, data)
+            .then((res) => {
+              setId(res);
+              setIsError(false);
+            })
+            .catch((err) => {
+              console.log(err.response?.status);
+              setIsError(err.response?.status);
+            });
+        }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     put();
-  }, [condition, reroadItem, reroadCompare]);
+    // clean up関数（Unmount時の処理）
+    return () => {
+      unmounted = true;
+      setIsLoading(false);
+      if (decide) {
+        if (type === "item") reroadItem();
+        if (type === "compare") reroadCompare();
+      }
+    };
+  }, [condition, reroadItem, id, reroadCompare, authUser]);
 
-  return [{ isLoading, isError }, setCondition];
+  return [{ id, isLoading, isError }, setCondition];
 };
 
 export default usePutData;

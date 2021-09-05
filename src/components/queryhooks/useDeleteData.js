@@ -1,48 +1,71 @@
 import { useState, useEffect } from "react";
 import { deleteData, selectDatas } from "../modules/myapi";
-import { useAuthUser } from "../../context/AuthUserContext";
-import { useUserItems } from "../../context/useReroadItemsContext";
-import { useUserCompares } from "../../context/useReroadComparesContext";
 
 export const useDeleteData = () => {
-  const authUser = useAuthUser();
-  const reroadItem = useUserItems();
-  const reroadCompare = useUserCompares();
+  // const reroadItem = useReroadItems();
+  // const reroadCompare = useReroadCompares();
 
-  const [condition, setCondition] = useState({ type: "", param: "" });
+  const [condition, setCondition] = useState({
+    type: null,
+    id: null,
+    param: null,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [result, setResult] = useState(false);
+  const [getId, setGetId] = useState(null);
 
   useEffect(() => {
     const { type, id, param } = condition;
-    if (!type) return;
-    setIsError(false);
-    setIsLoading(true);
-    let paramId = id;
-    const del = async () => {
-      if (!paramId) {
+    if (type&& !getId&&! id){ 
+    let unmounted = false;
+
+    const get = async () => {
+      if (!unmounted) {
+        setIsError(false);
+        setIsLoading(true);
+
         await selectDatas(type, param)
           .then((res) => {
-            paramId = res.id;
+            setGetId(res.id);
           })
           .catch((err) => setIsError(err.response.status));
       }
-      console.log(paramId);
-      if (paramId) {
+    };
+    get();
+   } }, [condition,getId]);
+
+  useEffect(() => {
+    const { type, id } = condition;
+
+    let paramId = id ? id : getId;
+    if (!type || !paramId) return;
+    let unmounted = false;
+    const del = async () => {
+      if (!unmounted) {
+        setIsError(false);
+        setIsLoading(true);
+
         await deleteData(type, paramId)
-          .then(() => {
+          .then((res) => {
+            console.log(res);
+            setResult(res);
             setIsError(false);
-            if (type === "item") reroadItem();
-            if (type === "compare") reroadCompare();
           })
           .catch((err) => setIsError(err.response.status));
         setIsLoading(false);
       }
     };
     del();
-  }, [condition, authUser, reroadItem, reroadCompare]);
+    // clean up関数（Unmount時の処理）
+    return () => {
+      unmounted = true;
+      setIsLoading(false);
 
-  return [{ isLoading, isError }, setCondition];
+    };
+  }, [getId, condition]);
+
+  return [{ result, isLoading, isError }, setCondition];
 };
 
 export default useDeleteData;

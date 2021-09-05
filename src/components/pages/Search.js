@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
   expand: {
     transform: "rotate(0deg)",
-    marginLeft: "auto",
+    //  marginLeft: "auto",
     display: "inline-block",
     transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
@@ -128,30 +128,12 @@ const defaultValues = {
 const Search = () => {
   const classes = useStyles();
   const location = useLocation();
-  const [actionErr, setActionErr] = useState(true);
-  //const items = useUserItems();
-
+ 
   const { items, itsLoaging, itsErr } = useUserItems();
   console.log(items);
   console.log(items, itsLoaging, itsErr);
-  // //商品情報取得hook(複数)
-  // const [
-  //   { data: items, isLoading: itsLoaging, isError: itsErr },
-  //   setItCondition,
-  // ] = useSelectDatas();
 
-  // //商品情報取得(複数)
-  // useEffect(() => {
-  //   if (!actionErr) return;
-  //   const fetch = () => {
-  //     setItCondition({
-  //       type: "item",
-  //       param: "&delete=false&record.decideDate=null",
-  //     });
-  //     setActionErr(false);
-  //   };
-  //   fetch();
-  // }, [setItCondition, actionErr]);
+  
 
   //遷移パラメータの取得
   const paramCondition = location.state
@@ -231,7 +213,7 @@ const Search = () => {
   };
 
   return (
-    <GenericTemplate title="検索">
+    <GenericTemplate title="Search">
       <CustomizedSnackbars
         open={snackbar.open}
         handleClose={handleClose}
@@ -386,15 +368,10 @@ const Search = () => {
       <div id="result">
         {itsLoaging && <CircularIndeterminate component="div" />}
         {resultData?.map((elm) => (
-          <SimpleAccordion
-            key={elm.id}
-            elm={elm}
-            allCondition={allCondition}
-            setActionErr={() => {
-              setActionErr(true);
-            }}
-          />
+          <SimpleAccordion key={elm.id} elm={elm} allCondition={allCondition} />
         ))}
+         <div style={{ textAlign: "center", display: "inline-block" }}>
+      </div>
       </div>
     </GenericTemplate>
   );

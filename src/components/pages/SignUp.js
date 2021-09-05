@@ -65,9 +65,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(2, 0, 2),
+    textTransform: "none",
   },
   button: {
     margin: theme.spacing(1),
+    textTransform: "none",
   },
 }));
 
@@ -140,11 +142,7 @@ const SignUp = memo(() => {
     // console.log(formData, authUser, user);
     if (!user) return;
     let unmounted = false;
-    // if (!formData || !user || (authUser && authUser.length === 1)) {
-    //   console.log(formData, user);
-    //   unmounted = true;
-    //   return;
-    // }
+
     console.log(user);
     if (user && user.length > 0) {
       setSnackbar({ open: true, severity: "error", message: signUpErr });
@@ -195,7 +193,7 @@ const SignUp = memo(() => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          はじめまして　
+          Hello!
         </Typography>
         <CustomizedSnackbars
           open={snackbar.open}
@@ -310,7 +308,7 @@ const SignUp = memo(() => {
                 className={classes.button}
                 onClick={handlePageChange}
               >
-                サインイン
+                SignIn
               </Button>
             </Grid>
           </Grid>

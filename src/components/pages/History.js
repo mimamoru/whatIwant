@@ -78,22 +78,7 @@ const History = () => {
   const [buyHistoryRows, setBuyHistoryRows] = useState([]);
   const [cancelHistoryRows, setCancelHistoryRows] = useState([]);
   const { items, itsLoaging, itsErr } = useUserItems();
-  // //商品情報取得hook(複数)
-  // const [
-  //   { data: items, isLoading: itsLoaging, isError: itsErr },
-  //   setItCondition,
-  // ] = useSelectDatas();
-
-  // //商品情報取得(複数)
-  // useEffect(() => {
-  //   const fetch = () => {
-  //     setItCondition({
-  //       type: "item",
-  //       param: "&delete=false&record.decideDate=null",
-  //     });
-  //   };
-  //   fetch();
-  // }, [setItCondition]);
+ 
 
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
@@ -180,7 +165,7 @@ const History = () => {
   };
 
   return (
-    <GenericTemplate title="履歴">
+    <GenericTemplate title="History">
       <div id="wrapper">
         <CustomizedSnackbars
           open={snackbar.open}

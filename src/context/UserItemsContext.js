@@ -50,7 +50,7 @@ const UserItemsProvider = ({ children }) => {
   );
 };
 
-export const useUserItemsContext = () => useContext(UserItemsContext);
-export const useReroadItemsContext = () =>
+export const useUserItems = () => useContext(UserItemsContext);
+export const useReroadItems = () =>
   useContext(UserReroadItemsContext);
 export default UserItemsProvider;

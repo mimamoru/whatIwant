@@ -22,18 +22,19 @@ export const getUrl = (type) => {
 //ローカルサーバーからid指定で値を取得する
 export const getData = async (type, id = "") => {
   const url = getUrl(type);
+  console.log(`${url}/${id}`)
   //const path = id === "" ? url : `${url}/${id}`;
   const { data } = await axios.get(`${url}/${id}`);
   return data;
 };
 
 //ローカルサーバーから条件指定で値を取得する
-export const selectDatas = async (type, param="") => {
+export const selectDatas = async (type, param = "") => {
   const url = getUrl(type);
   //`${url}?_page=${page}&_limit=10`;
   //?title=json-server&author=typicode
   const path = `${url}${param}`;
-  console.log("@@@@@@",path);
+  console.log("@@@@@@", path);
   const { data } = await axios.get(path);
   console.log(data);
   return data;
@@ -43,21 +44,30 @@ export const selectDatas = async (type, param="") => {
 export const postData = async (type = "", data = {}) => {
   const path = getUrl(type);
   const res = await axios.post(path, data);
-  console.log("登録"+res);
+  console.log("登録" + res);
   return res.data.id;
 };
 
 //ローカルサーバーの値を更新する
 export const putData = async (type = "", id = "", data = {}) => {
   const path = getUrl(type);
-  data.recordDate = getCurrentDate();
-  await axios.put(`${path}/${id}`, data);
+  const res = await axios.put(`${path}/${id}`, data);
+  console.log("更新" + res);
+  return res.data.id;
 };
 
 //ローカルサーバーの値を削除する
 export const deleteData = async (type = "", id = "") => {
   const path = getUrl(type);
-  await axios.delete(`${path}/${id}`);
+  let result;
+  console.log(path)
+  const res = await axios.delete(`${path}/${id}`).then(()=>{
+    result=true;
+  }).catch(()=>{
+    result=false;
+  });
+  console.log("更新" + res);
+  return result;
 };
 
 //整合性チェック

@@ -15,15 +15,15 @@ const useStyles = makeStyles((theme) => ({
   button1: {
     position: "absolute",
     textTransform: "none",
-    top: "calc(50% - 130px)",
-    left: "calc(50% - 50px)",
+    top: "calc(50% - 50px)",
+    left: "calc(50% - 90px)",
     margin: "100",
   },
   button2: {
     position: "absolute",
     textTransform: "none",
     top: "calc(50% - 50px)",
-    left: "calc(50% - 65px)",
+    left: "calc(50% + 90px)",
     margin: "100",
   },
 }));
@@ -50,7 +50,7 @@ const Home = () => {
         size="large"
         color="primary"
       >
-        はじめる
+       SignIn
       </Button>
       <Button
         className={classes.button2}
@@ -60,7 +60,7 @@ const Home = () => {
         size="large"
         color="primary"
       >
-        ユーザー登録
+        SignUp
       </Button>
     </div>
   );

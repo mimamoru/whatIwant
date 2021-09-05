@@ -180,42 +180,32 @@
   "compares": [
     {
       "id": "CP003U001",
-      "compare": [
-        "IT001U001",
-        "IT003U001"
-      ],
+      "compare0": "IT001U001",
+      "compare1": "IT003U001",
       "userId": "U001"
     },
     {
       "id": "CP004U001",
-      "compare": [
-        "IT005U001",
-        "IT006U001"
-      ],
+      "compare0": "IT005U001",
+      "compare1": "IT006U001",
       "userId": "U001"
     },
     {
       "id": "CP005U001",
-      "compare": [
-        "IT007U001",
-        "IT008U001"
-      ],
+      "compare0": "IT007U001",
+      "compare1": "IT008U001",
       "userId": "U001"
     },
     {
       "id": "CP006U001",
-      "compare": [
-        "IT001U001",
-        "IT002U001"
-      ],
+      "compare0": "IT001U001",
+      "compare1": "IT002U001",
       "userId": "U001"
     },
     {
       "id": "CP007U001",
-      "compare": [
-        "IT002U001",
-        "IT003U001"
-      ],
+      "compare0": "IT002U001",
+      "compare1": "IT003U001",
       "userId": "U001"
     }
   ]

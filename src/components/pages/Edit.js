@@ -1,9 +1,8 @@
-import { React, useState, useEffect, useCallback, useContext } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useHistory } from "react-router-dom";
 import ReactSelect from "react-select";
 import { useUserItems } from "../../context/UserItemsContext";
-import { useUserCompares } from "../../context/UserComparesContext";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Slider from "@material-ui/core/Slider";
@@ -15,8 +14,8 @@ import { BaseYup } from "../modules/localeJP";
 
 import GenericTemplate from "../molecules/GenericTemplate";
 import { getCurrentDate } from "../modules/myapi";
-import { useDeleteData, usePostData, usePutData } from "../queryhooks/index";
-import { err, edit, change } from "../modules/messages";
+import { usePutDataEx } from "../queryhooks/index";
+import { err, edit, change, notFound } from "../modules/messages";
 
 //バリデーションの指定
 const schema = BaseYup.object().shape({
@@ -47,15 +46,13 @@ const schema = BaseYup.object().shape({
 const valuetext = (value) => {
   return `${value}%`;
 };
-const selectCompares = (compares, itemId) => {
-  const arr = [];
-  compares
-    .filter((e) => itemId === e.compare[0] || itemId === e.compare[1])
-    .forEach((e) => arr.push(...e.compare));
-  return [...new Set(arr.filter((e) => e !== itemId))].sort();
-};
+
 //更新データ
-const putData = (id, data, compares) => {
+const putData = (defaultValues, data) => {
+  console.log("更新データ", data);
+  console.log("defaultValues", defaultValues);
+
+  const id = defaultValues.itemId;
   const putItemData = {
     id: id,
     name: data.itemName,
@@ -69,8 +66,8 @@ const putData = (id, data, compares) => {
       qty: null,
       cost: null,
       decideDate: null,
-      createDate: data.record.createDate,
-      recordDate: data.record.recordDate,
+      createDate: defaultValues.record?.createDate,
+      recordDate: defaultValues.record?.recordDate,
     },
   };
   let nexts = [];
@@ -81,8 +78,8 @@ const putData = (id, data, compares) => {
   nexts = nexts.sort();
 
   let olds = [];
-  compares &&
-    compares.forEach((e) => {
+  defaultValues.compares &&
+    defaultValues.compares.forEach((e) => {
       e && olds.push(e.value);
     });
   olds = olds.sort();
@@ -107,57 +104,30 @@ const Edit = () => {
   //遷移パラメータの取得
   const condition = location.state.condition;
   const itemInfo = location.state.itemInfo;
-  //const items = useUserItems();
+  const option = location.state.option;
+
   const { items, itsLoaging, itsErr } = useUserItems();
-  // //商品情報取得hook(複数)
-  // const [
-  //   { data: items, isLoading: itsLoaging, isError: itsErr },
-  //   setItCondition,
-  // ] = useSelectDatas();
-  //商品更新hook
-  const [{ isLoading: itPLoaging, isError: itPErr }, setItData] = usePutData();
-  //比較情報登録hook
-  const [{ isLoading: cpPLoaging, isError: cpPErr }, setCpPData] =
-    usePostData();
-  //比較情報削除hook
-  const [{ isLoading: cpDLoaging, isError: cpDErr }, setCpDData] =
-    useDeleteData();
-  //比較情報取得
-  const { compares, cpLoaging, cpErr } = useContext(useUserCompares);
 
-  // //比較情報を取得
-  // if (cpErr) {
-  //   setSnackbar({ open: true, severity: "error", message: err });
-  //   return;
-  // }
-
-  //セレクトボックスのプルダウンメニュー管理
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  //セレクトボックスのプルダウンメニューを設定
-  useEffect(() => {
-    if (cpLoaging) return;
-    if (cpErr) {
-      setSnackbar({ open: true, severity: "error", message: err });
-      return;
-    }
-    const compareArr = selectCompares(compares, itemInfo.id);
-    //比較情報に対応する商品名を取得(セレクトボックス初期値のため
-    const option = items
-      .filter((e) => compareArr.indexOf(e.id) !== -1)
-      .map((e) => ({ value: e.id, label: `${e.id}:${e.name}` }));
-    setSelectedOptions(...option);
-  }, [compares, cpErr, cpLoaging, itemInfo.id, items]);
+  //情報更新hook
+  const [{ result, itPErr, cpPErr, cpDErr }, setCondition] = usePutDataEx();
 
   //FORMデフォルト値の指定
   const defaultValues = {
-    itemId: itemInfo.id,
-    itemName: itemInfo.name,
-    budget: itemInfo.budget,
+    itemId: itemInfo.id || "",
+    itemName: itemInfo.name || "",
+    budget: itemInfo.budget || "",
     limitDate: itemInfo.limit?.split("T")[0] || "",
-    level: itemInfo.level,
+    level: itemInfo.level || 50,
     url: itemInfo.url || "",
     remark: itemInfo.remark || "",
-    compares: selectedOptions || "",
+    compares: option || [],
+    record: {
+      qty: null,
+      cost: null,
+      decideDate: null,
+      createDate: itemInfo.record?.createDate,
+      recordDate: itemInfo.record?.recordDate,
+    },
   };
 
   const {
@@ -191,68 +161,65 @@ const Edit = () => {
   const [options, setOptions] = useState([]);
   //セレクトボックスのプルダウンメニューを設定
   useEffect(() => {
-    if (itsLoaging) return;
+    if (!items) return;
     if (itsErr) {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
     const option = items
       .filter((e) => e.record?.decideDate === null)
+      .filter((e) => e.id !== itemInfo.id)
       .map((e) => ({
         value: e.id,
         label: `${e.id}:${e.name}`,
       }));
-    setOptions(...option);
-  }, [items, itsErr, itsLoaging]);
+    setOptions([...option]);
+  }, [items, itsErr, itemInfo]);
 
   const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const handleBack = () => {
+
+  //ホーム画面に遷移する処理
+  const handleBack = useCallback(async () => {
+    await _sleep(2000);
     //検索条件をパラメータとして一覧画面に遷移する
-    history.push("/", {
+    history.push("/search", {
       condition: condition,
     });
-  };
+  }, [history, condition]);
 
   //更新処理
   //成功の場合、一覧画面に戻る
-  async function handleEdit(data) {
-    const { putItemData, postCompareData, deleteCompareData } = putData(
-      defaultValues.itemId,
-      data,
-      defaultValues.compares
-    );
-    setItData(...{ type: "item", data: putItemData });
-    if (itPErr) {
-      //商品が更新、削除されていた場合は警告を表示し処理を終了する
-      if (itPErr === "changed") {
-        setSnackbar({ open: true, severity: "warning", message: change });
-      } else {
-        setSnackbar({ open: true, severity: "error", message: err });
-      }
-      return false;
-    }
-    postCompareData.forEach((e) => {
-      setCpPData(...{ type: "compare", data: e });
-      if (cpPErr) {
-        setSnackbar({ open: true, severity: "error", message: err });
-        return;
-      }
-    });
+  const handleEdit = useCallback(
+    (data) => {
+      const { putItemData, postCompareData, deleteCompareData } = putData(
+        defaultValues,
+        data
+      );
+      console.log(putItemData, postCompareData, deleteCompareData);
+      setCondition({
+        putItemData: putItemData,
+        postCompareData: postCompareData,
+        deleteCompareData: deleteCompareData,
+      });
+    },
+    [defaultValues, setCondition]
+  );
 
-    deleteCompareData.forEach((e) => {
-      setCpDData(...{ type: "compare", param: `&compare=${data}` });
-      if (cpDErr) {
-        setSnackbar({ open: true, severity: "error", message: err });
-        return;
-      }
-    });
-    setSnackbar({ open: true, severity: "success", message: edit });
-    await _sleep(2000);
-    handleBack();
-  }
+  useEffect(() => {
+    console.log("itperr*****", itPErr, result);
+    if (itPErr || cpPErr || cpDErr) {
+      //商品が更新、削除されていた場合は警告を表示し処理を終了する
+      const message =
+        itPErr === "changed" ? change : itPErr === "notFound" ? notFound : err;
+      setSnackbar({ open: true, severity: "error", message: message });
+    } else if (result) {
+      setSnackbar({ open: true, severity: "success", message: edit });
+      handleBack();
+    }
+  }, [itPErr, cpDErr, cpPErr, handleBack, result]);
 
   return (
-    <GenericTemplate title="編集">
+    <GenericTemplate title="Edit">
       <CustomizedSnackbars
         open={snackbar.open}
         handleClose={handleClose}
@@ -264,11 +231,9 @@ const Edit = () => {
         onSubmit={handleSubmit((data) => handleEdit(data))}
         className="form"
       >
-        {(itsLoaging || cpDLoaging || cpPLoaging || itPLoaging) && (
-          <CircularIndeterminate component="div" />
-        )}
         <hr />
         <div className="container">
+          {itsLoaging && <CircularIndeterminate component="div" />}
           <section>
             <h2>{defaultValues.itemId}</h2>
           </section>

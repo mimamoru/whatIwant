@@ -177,10 +177,10 @@
       "userId": "U001"
     },
     {
-      "id": "IT001U003",
-      "name": "aaa",
+      "id": "IT009U001",
+      "name": "sample1",
       "budget": 1234,
-      "limit": "2021-09-08T15:00:00.000Z",
+      "limit": "2021-09-04T15:00:00.000Z",
       "level": 50,
       "url": "",
       "remark": "",
@@ -189,53 +189,840 @@
         "qty": null,
         "cost": null,
         "decideDate": null,
-        "createDate": "2021-9-2 23:40:17",
-        "recordDate": "2021-9-2 23:40:17"
+        "createDate": "2021-9-5 12:31:30",
+        "recordDate": "2021-9-5 12:31:30"
       },
-      "userId": "U003"
+      "userId": "U001"
+    },
+    {
+      "id": "IT010U001",
+      "name": "uu",
+      "budget": 88,
+      "limit": "2021-09-23T15:00:00.000Z",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-9-5 12:31:30",
+        "recordDate": "2021-9-5 12:31:30"
+      },
+      "userId": "U001"
     }
   ],
   "compares": [
     {
       "id": "CP003U001",
-      "compare": [
-        "IT001U001",
-        "IT003U001"
-      ],
+      "compare0": "IT001U001",
+      "compare1": "IT003U001",
       "userId": "U001"
     },
     {
       "id": "CP004U001",
-      "compare": [
-        "IT005U001",
-        "IT006U001"
-      ],
+      "compare0": "IT005U001",
+      "compare1": "IT006U001",
       "userId": "U001"
     },
     {
       "id": "CP005U001",
-      "compare": [
-        "IT007U001",
-        "IT008U001"
-      ],
+      "compare0": "IT007U001",
+      "compare1": "IT008U001",
       "userId": "U001"
     },
     {
       "id": "CP006U001",
-      "compare": [
-        "IT001U001",
-        "IT002U001"
-      ],
+      "compare0": "IT001U001",
+      "compare1": "IT002U001",
       "userId": "U001"
     },
     {
       "id": "CP007U001",
-      "compare": [
-        "IT002U001",
-        "IT003U001"
-      ],
+      "compare0": "IT002U001",
+      "compare1": "IT003U001",
       "userId": "U001"
     },
-    []
+    {
+      "id": "CP008U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP009U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP010U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP011U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP012U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP013U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP014U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP015U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP016U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP017U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP018U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP019U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP020U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP021U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP022U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP023U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP024U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP025U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP026U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP027U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP028U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP029U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP030U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP031U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP032U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP033U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP034U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP035U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP036U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP037U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP038U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP039U001",
+      "compare0": "IT002U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP040U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP041U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP042U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP043U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP044U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP045U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP046U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP047U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP048U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP049U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP050U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP051U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP052U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP053U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP054U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP055U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP056U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP057U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP058U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP059U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP060U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP061U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP062U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP063U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP064U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP065U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP066U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP067U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP068U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP069U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP070U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP071U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP072U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP073U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP074U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP075U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP076U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP077U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP078U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP079U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP080U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP081U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP082U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP083U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP084U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP085U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP086U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP087U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP088U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP089U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP090U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP091U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP092U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP093U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP094U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP095U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP096U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP097U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP098U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP099U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP100U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP101U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP102U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP103U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP104U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP105U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP106U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP107U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP108U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP109U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP110U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP111U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP112U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP113U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP114U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP115U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP116U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP117U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP118U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP119U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP120U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP121U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP122U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP123U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP124U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP125U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP126U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP127U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP128U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP129U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP130U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP131U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP132U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP133U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP134U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP135U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP136U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP137U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
+      "userId": "U001"
+    }
   ]
 }

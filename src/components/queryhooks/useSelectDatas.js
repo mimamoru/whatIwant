@@ -14,7 +14,7 @@ export const useSelectDatas = () => {
     console.log("type" + type, "authUser" + authUser);
 
     let con;
-    if (!type) return;
+    if (!type || data) return;
     setIsError(false);
     setIsLoading(true);
     if (type === "user") {
@@ -34,7 +34,7 @@ export const useSelectDatas = () => {
     let unmounted = false;
     const select = async () => {
       console.log(type, con);
-      if (!unmounted&&(con!==unmounted)) {
+      if (!unmounted && con !== undefined) {
         await selectDatas(type, con)
           .then((res) => {
             console.log(res);
@@ -45,15 +45,16 @@ export const useSelectDatas = () => {
             console.log(err.response?.status);
             setIsError(err.response?.status);
           });
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
     select();
     // clean up関数（Unmount時の処理）
     return () => {
       unmounted = true;
+      setIsLoading(false);
     };
-  }, [condition, authUser]);
+  }, [condition, data, authUser]);
 
   return [{ data, isLoading, isError }, setCondition];
 };

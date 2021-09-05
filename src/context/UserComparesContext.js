@@ -45,8 +45,7 @@ const UserComparesProvider = ({ children }) => {
   );
 };
 
-export const useUserComparesContext = () => useContext(UserComparesContext);
-export const useReroadComparesContext = () =>
-  useContext(UserReroadComparesContext);
+export const useUserCompares = () => useContext(UserComparesContext);
+export const useReroadCompares = () => useContext(UserReroadComparesContext);
 
 export default UserComparesProvider;

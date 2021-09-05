@@ -15,8 +15,9 @@ import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 import CircularIndeterminate from "../atoms/CircularIndeterminate";
 import GenericTemplate from "../molecules/GenericTemplate";
 import { getCurrentDate } from "../modules/myapi";
-import { useSelectDatas, usePostData } from "../queryhooks/index";
+import { usePostDataEx } from "../queryhooks/index";
 import { err, register } from "../modules/messages";
+import { useHistory } from "react-router-dom";
 
 //バリデーションの指定
 const schema = BaseYup.object().shape({
@@ -91,6 +92,8 @@ const postData = (data) => {
 };
 
 const Register = () => {
+  const history = useHistory();
+
   const {
     control,
     handleSubmit,
@@ -100,27 +103,10 @@ const Register = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(schema),
   });
-  //商品登録hook
-  const [{ isLoading: itPLoaging, isError: itPErr }, setItData] = usePostData();
-  //比較情報登録hook
-  const [{ isLoading: cpPLoaging, isError: cPErr }, setCpData] = usePostData();
+  //情報登録hook
+  const [{ itId, itPErr, cpPErr }, setCondition] = usePostDataEx();
   const { items, itsLoaging, itsErr } = useUserItems();
-  // //商品情報取得hook(複数)
-  // const [
-  //   { data: items, isLoading: itsLoaging, isError: itsErr },
-  //   setItCondition,
-  // ] = useSelectDatas();
 
-  // //商品情報取得(複数)
-  // useEffect(() => {
-  //   const fetch = () => {
-  //     setItCondition({
-  //       type: "item",
-  //       param: "&delete=false&record.decideDate=null",
-  //     });
-  //   };
-  //   fetch();
-  // }, [setItCondition]);
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -148,33 +134,45 @@ const Register = () => {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
+    console.log(items);
     const option = items
       .filter((e) => e.record?.decideDate === null)
       .map((e) => ({
         value: e.id,
         label: `${e.id}:${e.name}`,
       }));
-    setOptions(...option);
+    setOptions([...option]);
   }, [itsLoaging, itsErr, items]);
 
   //登録処理
-  async function handleRegister(data) {
-    const { postItemData, postCompareData } = postData(data);
-    setItData({ type: "item", data: postItemData });
-    if (itsErr) {
+  const handleRegister = useCallback(
+    (data) => {
+      const { postItemData, postCompareData } = postData(data);
+      console.log(
+        "postItemData",
+        postItemData,
+        "postCompareData",
+        postCompareData
+      );
+      setCondition({ itemData: postItemData, compareData: postCompareData });
+    },
+    [setCondition]
+  );
+
+  useEffect(() => {
+    if (itPErr || cpPErr) {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
-    setCpData({ type: "compare", data: postCompareData });
-    if (cPErr) {
-      setSnackbar({ open: true, severity: "error", message: err });
-      return;
+    if (itId) {
+      console.log(itId);
+      setSnackbar({ open: true, severity: "success", message: register });
+      reset();
     }
-    setSnackbar({ open: true, severity: "success", message: register });
-  }
+  }, [itPErr, cpPErr, itId, reset]);
 
   return (
-    <GenericTemplate title="登録">
+    <GenericTemplate title="Register">
       <CustomizedSnackbars
         open={snackbar.open}
         handleClose={handleClose}
@@ -186,7 +184,7 @@ const Register = () => {
         onSubmit={handleSubmit((data) => handleRegister(data))}
         className="form"
       >
-        {itPLoaging && <CircularIndeterminate component="div" />}
+        {/* {itPLoaging && <CircularIndeterminate component="div" />} */}
         <hr />
         <div className="container">
           <section>

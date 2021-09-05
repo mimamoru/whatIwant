@@ -9,7 +9,8 @@ export const purchase = "購入しました";
 export const cancel = "キャンセルしました";
 export const nodata = "表示する商品がありません";
 export const reverse = "金額範囲の大小関係が正しくありません";
-export const change = "商品情報が削除または更新された可能性があります";
+export const change = "更新元の情報が最新ではありません";
+export const notFound = "商品情報が削除された可能性があります";
 
 export const confirmDelete = "商品を削除します。\nよろしいですか。";
 export const confirmPurchase = "商品の購入を記録します。\nよろしいですか。";

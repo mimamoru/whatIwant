@@ -4,32 +4,41 @@ import { useAuthUser } from "../../context/AuthUserContext";
 
 export const useGetData = () => {
   const authUser = useAuthUser();
-  const [data, setData] = useState({});
-  const [condition, setCondition] = useState({ type: "", id: "" });
+  const [data, setData] = useState(null);
+  const [condition, setCondition] = useState({ type: null, id: null });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const { type, id } = condition;
-    if (!type) return;
-    setIsError(false);
-    setIsLoading(true);
-    if (authUser.id.split("U")[1] !== id.split("U")[1]) {
-      setIsError(999);
-      setIsLoading(false);
-      return;
-    }
+    if (!type || !id || !authUser) return;
+    let unmounted = false;
+
     const get = async () => {
-      await getData(type, id)
-        .then((res) => {
-          console.log(res);
-          setData([...res]);
-          setIsError(false);
-        })
-        .catch((err) => setIsError(err.response.status));
-      setIsLoading(false);
+      if (!unmounted) {
+        if (authUser[0].id.split("U")[1] !== id.split("U")[1]) {
+          setIsError(999);
+          setIsLoading(false);
+          return;
+        }
+        await getData(type, id)
+          .then((res) => {
+            console.log(res);
+            setData(res);
+            setIsError(false);
+          })
+          .catch((err) => {
+            console.log(err.response?.status);
+            setIsError(err.response?.status);
+          });
+        setIsLoading(false);
+      }
     };
     get();
+    return () => {
+      setIsLoading(false);
+      unmounted = true;
+    };
   }, [condition, authUser]);
 
   return [{ data, isLoading, isError }, setCondition];

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import HistoryOutlinedIcon from "@material-ui/icons/HistoryOutlined";
 import QueueIcon from "@material-ui/icons/Queue";
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from "@material-ui/icons/Home";
 const current = {
   color: "blue",
   textDecoration: "underline",
@@ -14,12 +14,12 @@ const current = {
 
 export const listItems = (
   <div>
-     <Link exact="true" to="/mypage" activestyle={current}>
+    <Link exact="true" to="/mypage" activestyle={current}>
       <ListItem button>
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
-        <ListItemText primary="マイページ" />
+        <ListItemText primary="MyPage" />
       </ListItem>
     </Link>
     <Link exact="true" to="/search" activestyle={current}>
@@ -27,7 +27,7 @@ export const listItems = (
         <ListItemIcon>
           <SearchOutlinedIcon />
         </ListItemIcon>
-        <ListItemText primary="検索" />
+        <ListItemText primary="Search" />
       </ListItem>
     </Link>
     <Link exact="true" to="/register" activestyle={current}>
@@ -35,7 +35,7 @@ export const listItems = (
         <ListItemIcon>
           <QueueIcon />
         </ListItemIcon>
-        <ListItemText primary="登録" />
+        <ListItemText primary="Register" />
       </ListItem>
     </Link>
     <Link exact="true" to="/history" activestyle={current}>
@@ -43,7 +43,7 @@ export const listItems = (
         <ListItemIcon>
           <HistoryOutlinedIcon />
         </ListItemIcon>
-        <ListItemText primary="履歴" />
+        <ListItemText primary="History" />
       </ListItem>
     </Link>
   </div>

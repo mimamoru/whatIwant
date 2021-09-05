@@ -48,9 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: "none",
   },
   button: {
     margin: theme.spacing(1),
+    textTransform: "none",
   },
 }));
 
@@ -84,7 +86,7 @@ const SignIn = memo(() => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          ようこそ
+        Welcome!
         </Typography>
         <form onSubmit={handleSubmit((data) => signin(data.mail,data.password))} className="form">
           <Controller
@@ -137,7 +139,7 @@ const SignIn = memo(() => {
             className={classes.submit}
             disabled={!confirm}
           >
-            はじめる
+           SignIn
           </Button>
           <Grid container>
             <Grid item>
@@ -148,7 +150,7 @@ const SignIn = memo(() => {
                 className={classes.button}
                 onClick={handlePageChange}
               >
-                ユーザー登録
+               SignUp
               </Button>
             </Grid>
           </Grid>
