@@ -214,8 +214,8 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
   const handleDelete = useCallback(() => {
     setConfDlg("");
     const id = elm.id;
-    const compareArr = selectCompares(compares, id);
-    const deleteCompareData = compareArr.map((e) => [e, id].sort());
+    const deleteCompareData = selectCompares(compares, id);
+  //  const deleteCompareData = compareArr.map((e) => [e, id].sort());
     //商品情報を論理削除し、画面から消去する
     setCondition(elm.id);
     elm.delete = true;

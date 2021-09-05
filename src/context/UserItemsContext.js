@@ -33,24 +33,21 @@ const UserItemsProvider = ({ children }) => {
     fetch();
   }, [setItCondition, reroadItems]);
 
-  const value = {
-    items,
-    itsLoaging,
-    itsErr,
-  };
-
   return (
     <UserReroadItemsContext.Provider value={reroadItem}>
-
-    <UserItemsContext.Provider value={value}>
-      {children}
-    </UserItemsContext.Provider>
+      <UserItemsContext.Provider
+        value={{
+          items,
+          itsLoaging,
+          itsErr,
+        }}
+      >
+        {children}
+      </UserItemsContext.Provider>
     </UserReroadItemsContext.Provider>
-
   );
 };
 
 export const useUserItems = () => useContext(UserItemsContext);
-export const useReroadItems = () =>
-  useContext(UserReroadItemsContext);
+export const useReroadItems = () => useContext(UserReroadItemsContext);
 export default UserItemsProvider;

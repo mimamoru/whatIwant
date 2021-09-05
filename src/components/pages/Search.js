@@ -50,8 +50,9 @@ const schema = BaseYup.object().shape({
 
 const SelectItems = (
   items,
-  { itemId, itemName, minBudget, maxBudget, keyword, condition, sortIndex }
+  { itemId="", itemName="", minBudget="", maxBudget="", keyword="", condition=false, sortIndex="id" }
 ) => {
+  console.log("SelectItems",items,sortIndex)
   if (!items) return;
   const keywords = keyword ? keyword.split(/\s+/) : "";
   let result = items
@@ -69,7 +70,8 @@ const SelectItems = (
         return keywords.every((key) => str.indexOf(key) !== -1);
       }
     });
-  switch (sortIndex.value) {
+   
+  switch (sortIndex) {
     case "budget":
       result = result.sort((a, b) => (a.budget < b.budget ? -1 : 1));
       break;
@@ -130,7 +132,7 @@ const Search = () => {
   const location = useLocation();
  
   const { items, itsLoaging, itsErr } = useUserItems();
-  console.log(items);
+  console.log("search",items);
   console.log(items, itsLoaging, itsErr);
 
   
@@ -197,6 +199,7 @@ const Search = () => {
         setSnackbar({ open: true, severity: "error", message: err });
         return;
       }
+      console.log("conditions",conditions)
       const result = SelectItems(items, conditions);
       const length = result.length;
       if (length === 0) {

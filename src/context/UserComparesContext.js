@@ -31,14 +31,16 @@ const UserComparesProvider = ({ children }) => {
     };
     fetch();
   }, [setCpCondition, reroadCompares]);
-  const value = {
-    compares,
-    cpLoaging,
-    cpErr,
-  };
+
   return (
     <UserReroadComparesContext.Provider value={reroadCompare}>
-      <UserComparesContext.Provider value={value}>
+      <UserComparesContext.Provider
+        value={{
+          compares,
+          cpLoaging,
+          cpErr,
+        }}
+      >
         {children}
       </UserComparesContext.Provider>
     </UserReroadComparesContext.Provider>

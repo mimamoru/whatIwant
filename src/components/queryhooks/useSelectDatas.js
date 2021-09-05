@@ -42,8 +42,8 @@ export const useSelectDatas = () => {
             setIsError(false);
           })
           .catch((err) => {
-            console.log(err.response?.status);
-            setIsError(err.response?.status);
+            setIsError(true);
+            setIsError(err);
           });
       }
       setIsLoading(false);

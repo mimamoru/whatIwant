@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { postData, getCurrentDate, selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
-import { useReroadItems } from "../../context/UserItemsContext";
-import { useReroadCompares } from "../../context/UserComparesContext";
 
 export const usePostData = () => {
   const authUser = useAuthUser();
@@ -11,7 +9,7 @@ export const usePostData = () => {
   const [condition, setCondition] = useState({ type: null, data: null });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  console.log(authUser);
+
   useEffect(() => {
     const { type, data } = condition;
 
@@ -47,20 +45,21 @@ export const usePostData = () => {
                 authUser[0].id;
             }
           })
-          .catch((err) => setIsError(err.response?.status));
+          .catch((err) => {
+            setIsError(true);
+            setIsError(err);
+          });
         console.log("id", data.id);
         if (!data.id) {
           setIsLoading(false);
           setIsError(true);
           return;
         }
-        console.log(data);
         if (data.record !== undefined) {
           data.record.createDate = data.record.recordDate = getCurrentDate();
         }
 
         if (type === "item" || type === "compare") data.userId = authUser[0].id;
-        console.log(data);
         await postData(type, data)
           .then((res) => {
             console.log(res);
@@ -69,8 +68,7 @@ export const usePostData = () => {
             setIsError(false);
           })
           .catch((err) => {
-            console.log(err);
-            setIsError(err.response?.status);
+            setIsError(err);
           });
 
         setIsLoading(false);
@@ -79,8 +77,8 @@ export const usePostData = () => {
     post();
     // clean up関数（Unmount時の処理）
     return () => {
-      unmounted = true;
       setIsLoading(false);
+      unmounted = true;
     };
   }, [condition, authUser]);
 

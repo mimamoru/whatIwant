@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useCallback, useContext } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 
 import { useForm, Controller } from "react-hook-form";
 
@@ -12,7 +12,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";
 import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 
-import CircularIndeterminate from "../atoms/CircularIndeterminate";
 import GenericTemplate from "../molecules/GenericTemplate";
 import { getCurrentDate } from "../modules/myapi";
 import { usePostDataEx } from "../queryhooks/index";
@@ -84,7 +83,6 @@ const postData = (data) => {
     data.compares.forEach((e) => {
       e && postCompareData.push(e.value);
     });
-  postCompareData = postCompareData.sort();
   return {
     postItemData: postItemData,
     postCompareData: postCompareData,
@@ -104,7 +102,7 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
   //情報登録hook
-  const [{ itId, itPErr, cpPErr }, setCondition] = usePostDataEx();
+  const [{ result, itId, itPErr }, setCondition] = usePostDataEx();
   const { items, itsLoaging, itsErr } = useUserItems();
 
   //スナックバーの状態管理
@@ -144,9 +142,19 @@ const Register = () => {
     setOptions([...option]);
   }, [itsLoaging, itsErr, items]);
 
+  const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  //ホーム画面に遷移する処理
+  const handleBack = useCallback(async () => {
+    await _sleep(2000);
+    //検索条件をパラメータとして一覧画面に遷移する
+    history.push("/search", {});
+  }, [history]);
+
   //登録処理
   const handleRegister = useCallback(
     (data) => {
+      if(!result){
       const { postItemData, postCompareData } = postData(data);
       console.log(
         "postItemData",
@@ -155,21 +163,23 @@ const Register = () => {
         postCompareData
       );
       setCondition({ itemData: postItemData, compareData: postCompareData });
-    },
-    [setCondition]
+    }},
+    [result,setCondition]
   );
 
   useEffect(() => {
-    if (itPErr || cpPErr) {
+    console.log(itPErr,result )
+    if (itPErr || result === "error") {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
-    if (itId) {
+    if (result) {
       console.log(itId);
       setSnackbar({ open: true, severity: "success", message: register });
       reset();
+      handleBack();
     }
-  }, [itPErr, cpPErr, itId, reset]);
+  }, [itPErr, itId, reset, result,handleBack]);
 
   return (
     <GenericTemplate title="Register">

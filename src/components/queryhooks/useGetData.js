@@ -17,7 +17,7 @@ export const useGetData = () => {
     const get = async () => {
       if (!unmounted) {
         if (authUser[0].id.split("U")[1] !== id.split("U")[1]) {
-          setIsError(999);
+          setIsError(true);
           setIsLoading(false);
           return;
         }
@@ -28,8 +28,7 @@ export const useGetData = () => {
             setIsError(false);
           })
           .catch((err) => {
-            console.log(err.response?.status);
-            setIsError(err.response?.status);
+            setIsError(err);
           });
         setIsLoading(false);
       }

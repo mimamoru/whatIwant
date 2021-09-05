@@ -32,7 +32,10 @@ export const usePutData = () => {
           .then((res) => {
             currentData = res;
           })
-          .catch((err) => setIsError(err.response.status));
+          .catch((err) => {
+            setIsError(true);
+            setIsError(err);
+          });
         if (!currentData) {
           setIsError("notFound");
           setIsLoading(false);
@@ -56,8 +59,8 @@ export const usePutData = () => {
               setIsError(false);
             })
             .catch((err) => {
-              console.log(err.response?.status);
-              setIsError(err.response?.status);
+              setIsError(true);
+              setIsError(err);
             });
         }
         setIsLoading(false);
@@ -66,8 +69,8 @@ export const usePutData = () => {
     put();
     // clean up関数（Unmount時の処理）
     return () => {
+      //setIsLoading(false);
       unmounted = true;
-      setIsLoading(false);
       if (decide) {
         if (type === "item") reroadItem();
         if (type === "compare") reroadCompare();

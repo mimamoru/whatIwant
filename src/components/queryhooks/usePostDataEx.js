@@ -2,16 +2,18 @@ import { useState, useEffect } from "react";
 import { usePostData } from "../queryhooks/index";
 import { useReroadItems } from "../../context/UserItemsContext";
 import { useReroadCompares } from "../../context/UserComparesContext";
+import { postArrData } from "../modules/myapi";
+import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePostDataEx = () => {
+  const authUser = useAuthUser();
   const reroadItem = useReroadItems();
   const reroadCompare = useReroadCompares();
   //商品情報登録hook
   const [{ id: itId, isLoading: itPLoaging, isError: itPErr }, setitPData] =
     usePostData();
-  //比較情報登録hook
-  const [{ id: cpId, isLoading: cpPLoaging, isError: cpPErr }, setcpPData] =
-    usePostData();
+
+  const [result, setResult] = useState(false);
 
   const [condition, setCondition] = useState(null);
   // const { itemData, data } = condition;
@@ -39,49 +41,30 @@ export const usePostDataEx = () => {
     if (!condition || !itId) return;
     const compareData = condition.compareData;
     console.log(compareData, itId);
-    if (!compareData || compareData.length === 0) return;
+    if (!compareData) return;
     let unmounted = false;
-    const post=() => {
+    const post = async () => {
       if (!unmounted) {
-        for (let e of compareData) {
-          console.log(e);
-          const arr = [itId, e].sort();
-          const postData = {
-            type: "compare",
-            data: {
-              id: null,
-              compare0: arr[0],
-              compare1: arr[1],
-            },
-          };
-          setcpPData({ ...postData });
-        }
+        await postArrData(authUser[0].id, compareData, itId)
+          .then((res) => {
+            console.log(res);
+            setResult(res);
+           
+          })
+          .catch(() => {
+            setResult("error");
+          });
       }
     };
     post();
     // clean up関数（Unmount時の処理）
     return () => {
       unmounted = true;
+      reroadItem();
+      reroadCompare();
     };
-  }, [condition, cpId, itId, setcpPData]);
-
-  useEffect(() => {
-    let unmounted = false;
-    if (!condition || !itId) return;
-    const func = () => {
-      if (!unmounted && (cpId || condition.compareData?.length === 0)) {
-        reroadItem();
-        reroadCompare();
-      }
-    };
-    func();
-    // clean up関数（Unmount時の処理）
-    return () => {
-      unmounted = true;
-    };
-  }, [itId, cpId, condition, reroadCompare, reroadItem]);
-
-  return [{ itId, itPErr, cpPErr }, setCondition];
+  }, [authUser, condition, itId, reroadCompare, reroadItem]);
+  return [{ result, itId, itPErr }, setCondition];
 };
 
 export default usePostDataEx;

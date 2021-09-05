@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useCallback } from "react";
+import { React, useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useHistory } from "react-router-dom";
 import ReactSelect from "react-select";
@@ -57,7 +57,7 @@ const putData = (defaultValues, data) => {
     id: id,
     name: data.itemName,
     budget: data.budget,
-    limit: data.limitDate,
+    limit: data.limitDate?getCurrentDate(data.limitDate):null,
     level: data.level,
     url: data.url,
     remark: data.remark,
@@ -84,9 +84,7 @@ const putData = (defaultValues, data) => {
     });
   olds = olds.sort();
 
-  const postCompareData = nexts
-    .filter((e) => !olds.includes(e))
-    .map((e) => [e, id].sort());
+  const postCompareData = nexts.filter((e) => !olds.includes(e));
   const deleteCompareData = olds
     .filter((e) => !nexts.includes(e))
     .map((e) => [e, id].sort());
@@ -109,26 +107,29 @@ const Edit = () => {
   const { items, itsLoaging, itsErr } = useUserItems();
 
   //情報更新hook
-  const [{ result, itPErr, cpPErr, cpDErr }, setCondition] = usePutDataEx();
+  const [{ result, itPErr }, setCondition] = usePutDataEx();
 
   //FORMデフォルト値の指定
-  const defaultValues = {
-    itemId: itemInfo.id || "",
-    itemName: itemInfo.name || "",
-    budget: itemInfo.budget || "",
-    limitDate: itemInfo.limit?.split("T")[0] || "",
-    level: itemInfo.level || 50,
-    url: itemInfo.url || "",
-    remark: itemInfo.remark || "",
-    compares: option || [],
-    record: {
-      qty: null,
-      cost: null,
-      decideDate: null,
-      createDate: itemInfo.record?.createDate,
-      recordDate: itemInfo.record?.recordDate,
-    },
-  };
+  const defaultValues = useMemo(
+    () => ({
+      itemId: itemInfo.id || "",
+      itemName: itemInfo.name || "",
+      budget: itemInfo.budget || "",
+      limitDate: itemInfo.limit?.split("T")[0] || "",
+      level: itemInfo.level || 50,
+      url: itemInfo.url || "",
+      remark: itemInfo.remark || "",
+      compares: option || [],
+      record: {
+        qty: null,
+        cost: null,
+        decideDate: null,
+        createDate: itemInfo.record?.createDate,
+        recordDate: itemInfo.record?.recordDate,
+      },
+    }),
+    [itemInfo, option]
+  );
 
   const {
     control,
@@ -191,23 +192,25 @@ const Edit = () => {
   //成功の場合、一覧画面に戻る
   const handleEdit = useCallback(
     (data) => {
-      const { putItemData, postCompareData, deleteCompareData } = putData(
-        defaultValues,
-        data
-      );
-      console.log(putItemData, postCompareData, deleteCompareData);
-      setCondition({
-        putItemData: putItemData,
-        postCompareData: postCompareData,
-        deleteCompareData: deleteCompareData,
-      });
+      if (!result) {
+        const { putItemData, postCompareData, deleteCompareData } = putData(
+          defaultValues,
+          data
+        );
+        console.log(putItemData, postCompareData, deleteCompareData);
+        setCondition({
+          putItemData: putItemData,
+          postCompareData: postCompareData,
+          deleteCompareData: deleteCompareData,
+        });
+      }
     },
-    [defaultValues, setCondition]
+    [defaultValues, setCondition, result]
   );
 
   useEffect(() => {
     console.log("itperr*****", itPErr, result);
-    if (itPErr || cpPErr || cpDErr) {
+    if (itPErr || result === "error") {
       //商品が更新、削除されていた場合は警告を表示し処理を終了する
       const message =
         itPErr === "changed" ? change : itPErr === "notFound" ? notFound : err;
@@ -216,7 +219,7 @@ const Edit = () => {
       setSnackbar({ open: true, severity: "success", message: edit });
       handleBack();
     }
-  }, [itPErr, cpDErr, cpPErr, handleBack, result]);
+  }, [itPErr, handleBack, result]);
 
   return (
     <GenericTemplate title="Edit">
