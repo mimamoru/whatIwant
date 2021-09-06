@@ -25,7 +25,6 @@ export const usePostData = () => {
         const param = type === "user" ? "" : `?userId=${authUser[0].id}`;
         await selectDatas(type, param)
           .then((res) => {
-            console.log("res", res, type);
             const response = res;
             if (type === "user") {
               const currentNum =
@@ -38,7 +37,6 @@ export const usePostData = () => {
                 response.length === 0
                   ? 0
                   : +response[response.length - 1].id.split("U")[0].slice(-3);
-              console.log("currentNum", currentNum, +currentNum + 1);
               data.id =
                 (type === "item" ? "IT" : "CP") +
                 ("00" + (+currentNum + 1)).slice(-3) +
@@ -49,7 +47,6 @@ export const usePostData = () => {
             setIsError(true);
             setIsError(err);
           });
-        console.log("id", data.id);
         if (!data.id) {
           setIsLoading(false);
           setIsError(true);
@@ -62,15 +59,12 @@ export const usePostData = () => {
         if (type === "item" || type === "compare") data.userId = authUser[0].id;
         await postData(type, data)
           .then((res) => {
-            console.log(res);
             setId(res);
-
             setIsError(false);
           })
           .catch((err) => {
             setIsError(err);
           });
-
         setIsLoading(false);
       }
     };

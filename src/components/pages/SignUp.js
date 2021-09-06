@@ -1,17 +1,10 @@
-import React, {
-  memo,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-} from "react";
+import React, { memo, useState, useCallback, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
@@ -75,8 +68,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = memo(() => {
   const history = useHistory();
-  const authUser = useAuthUser();
-  console.log(authUser);
   const {
     control,
     handleSubmit,
@@ -91,11 +82,10 @@ const SignUp = memo(() => {
   const [confirm, setcConfirm] = useState(false);
 
   //ユーザー情報取得hook
-  const [{ data: user, isLoading: usLoaging, isError: usErr }, setUsCondition] =
+  const [{ data: user, isLoading: usLoaging }, setUsCondition] =
     useSelectDatas();
   //ユーザー情報登録hook
-  const [{ id, isLoading: usPLoaging, isError: usPErr }, setusPData] =
-    usePostData();
+  const [{ id }, setusPData] = usePostData();
 
   const [formData, setFormData] = useState(null);
 
@@ -118,7 +108,6 @@ const SignUp = memo(() => {
   );
 
   useEffect(() => {
-    //    console.log(formData, usErr,user);
     if (!formData) {
       return;
     }
@@ -139,7 +128,6 @@ const SignUp = memo(() => {
   }, [formData, setUsCondition]);
 
   useEffect(() => {
-    // console.log(formData, authUser, user);
     if (!user) return;
     let unmounted = false;
 

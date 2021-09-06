@@ -11,8 +11,6 @@ export const useSelectDatas = () => {
 
   useEffect(() => {
     const { type, param } = condition;
-    console.log("type" + type, "authUser" + authUser);
-
     let con;
     if (!type || data) return;
     setIsError(false);
@@ -25,7 +23,6 @@ export const useSelectDatas = () => {
         setIsError(999);
         return;
       } else {
-        console.log(authUser);
         con = param
           ? `?userId=${authUser[0].id}${param}`
           : `?userId=${authUser[0].id}`;
@@ -33,11 +30,9 @@ export const useSelectDatas = () => {
     }
     let unmounted = false;
     const select = async () => {
-      console.log(type, con);
       if (!unmounted && con !== undefined) {
         await selectDatas(type, con)
           .then((res) => {
-            console.log(res);
             setData(res);
             setIsError(false);
           })

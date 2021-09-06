@@ -14,7 +14,6 @@ import {
   YAxis,
   ZAxis,
   ScatterChart,
-  ResponsiveContainer,
   Tooltip,
   Scatter,
 } from "recharts";
@@ -113,7 +112,7 @@ const Mypage = () => {
     });
     setStaticsData({ statistics1: statistics1, statistics2: statistics2 });
   }, [items, compares, authUser]);
-  console.log(staticsData);
+
   return (
     <GenericTemplate title="MyPage">
       <hr />
@@ -171,7 +170,11 @@ const Mypage = () => {
             <Paper className={classes.paper}>
               <Grid container className={classes.container}>
                 <Grid item xs={12}>
-                  <BarChart width={500} height={300} data={staticsData.statistics1}>
+                  <BarChart
+                    width={500}
+                    height={300}
+                    data={staticsData.statistics1}
+                  >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis // X軸
                       name="購入日"
@@ -184,7 +187,6 @@ const Mypage = () => {
                       name="購入金額"
                       unit="円" // Y軸の単位
                     />
-
                     <Tooltip />
                     <Legend />
                     <Bar

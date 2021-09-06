@@ -1,11 +1,4 @@
-import {
-  useState,
-  memo,
-  useEffect,
-  useRef,
-  useCallback,
-  useContext,
-} from "react";
+import { useState, memo, useEffect, useRef, useCallback } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
@@ -18,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
@@ -58,13 +50,6 @@ const useStyles = makeStyles((theme) => ({
     width: 350,
     height: 300,
   },
-  // content:{
-  //   width: 400,
-  //   display: "block",
-  //   textAlign: "center",
-  //   verticalAlign: "middle",
-  //   position: "relative",
-  // },
   details: {
     position: "absolute",
     display: "inline-block",
@@ -73,17 +58,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 100,
     backgroundColor: "white",
   },
-  // action: {
-  //   display: "block",
-  //   position: "relative",
-  //   width: 400,
-  //   height: 70,
-  // },
   heading: {
     width: 300,
-    // height: 70,
-    // display: "block",
-    // textAlign: "center",
     verticalAlign: "middle",
     position: "relative",
     fontSize: theme.typography.pxToRem(15),
@@ -100,15 +76,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//該当商品の比較商品を配列で返す
 const selectCompares = (compares, itemId) => {
   if (!compares) return [];
-  console.log(compares, itemId);
   const arr = [];
   compares
     .filter((e) => itemId === e.compare0 || itemId === e.compare1)
     .forEach((e) => arr.push(...[e.compare0, e.compare1]));
   return [...new Set(arr.filter((e) => e !== itemId))].sort();
 };
+
 //詳細情報エラー表示の削除
 const handleChange = (id) => {
   if (id) {
@@ -121,29 +98,25 @@ const handleChange = (id) => {
 };
 
 const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 //情報表示用パネル
 const SimpleAccordion = memo(({ elm, allCondition }) => {
   const history = useHistory();
+  const classes = useStyles();
+
+  //比較情報コンテキスト
+  const { compares } = useUserCompares();
+  //商品情報コンテキスト
+  const { items } = useUserItems();
+
   //商品情報取得hook(1件)
   const [{ data: item, isLoading: itLoaging, isError: itErr }, setItId] =
     useGetData();
   //商品更新hook
-  const [{ id: itId, isLoading: itPLoaging, isError: itPErr }, setItPData] =
-    usePutData();
-
+  const [{ id: itId, isError: itPErr }, setItPData] = usePutData();
   //情報更新hook(削除用)
-  const [{ result, itPErr: itDErr, cpPErr, cpDErr }, setCondition] =
-    usePutDataEx();
-  // //比較情報削除hook
-  // const [{ isLoading: itDLoaging, isError: itDErr }, setItDId] =
-  //   useDeleteData();
-  //比較情報取得hook
-  const { compares, cpLoaging, cpErr } = useUserCompares();
-  console.log(compares);
+  const [{ result, itPErr: itDErr }, setCondition] = usePutDataEx();
 
-  const { items, itsLoaging, itsErr } = useUserItems();
-
-  const classes = useStyles();
   //数量(検索結果)の状態
   const inputQtyRef = useRef(null);
   //単価(検索結果)の状態
@@ -169,6 +142,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
     },
     [snackbar]
   );
+
   //編集アイコン押下
   const handleEdit = useCallback(
     (elm) => {
@@ -181,6 +155,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
     },
     [setItId]
   );
+
   useEffect(() => {
     if (!item || !items || !compares) return;
 
@@ -188,15 +163,13 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
-    //const paramItem = item;
     //商品が、削除、購入、キャンセル状態の場合は警告を表示し、処理を中断する
     if (item.record?.decideDate || item.delete === true) {
       setSnackbar({ open: true, severity: "warning", message: change });
       return;
     }
-    console.log(item);
     const compareArr = selectCompares(compares, item.id);
-    console.log(compareArr, item);
+
     //比較情報に対応する商品名を取得(セレクトボックス初期値のため
     const option = items
       .filter((e) => compareArr.indexOf(e.id) !== -1)
@@ -210,21 +183,22 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
     });
   }, [allCondition, history, itErr, item, compares, items]);
 
-  //削除処理
+  //商品削除処理
   const handleDelete = useCallback(() => {
     setConfDlg("");
     const id = elm.id;
     const deleteCompareData = selectCompares(compares, id);
-  //  const deleteCompareData = compareArr.map((e) => [e, id].sort());
-    //商品情報を論理削除し、画面から消去する
-    setCondition(elm.id);
+
     elm.delete = true;
+
     setCondition({
       putItemData: elm,
       postCompareData: [],
       deleteCompareData: deleteCompareData,
     });
   }, [compares, elm, setCondition]);
+
+  //商品削除の結果表示
   useEffect(() => {
     let unmounted = false;
     const func = async () => {
@@ -235,6 +209,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
         } else if (result) {
           setSnackbar({ open: true, severity: "success", message: drop });
           await _sleep(2000);
+          //成功の場合は画面から商品を削除する
           const dom = document.getElementById(elm.id);
           if (dom) dom.style.display = "none";
         }
@@ -247,11 +222,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
     };
   }, [elm, itDErr, result]);
 
-  // const updateItem = () => {
-  //   //商品情報更新
-  //   setItPData({ type: "item", data: elm, decide: true });
-  // };
-
+  //商品更新の結果表示
   useEffect(() => {
     let unmounted = false;
     const func = async () => {
@@ -268,12 +239,9 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
         } else if (itId) {
           //商品情報更新後、検索結果で非表示とする
           const message = elm.record?.qty ? purchase : cancel;
-          console.log(message);
           setSnackbar({ open: true, severity: "success", message: message });
-          console.log(elm);
           await _sleep(2000);
           const dom = document.getElementById(elm.id);
-          console.log("!!!!!!!!!D", dom, "elm", elm);
           if (dom) dom.style.display = "none";
         }
       }
@@ -368,14 +336,12 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
         <Accordion className={classes.accordion}>
           <AccordionSummary
             expandIcon={<ExpandMoreRoundedIcon />}
-            // aria-label="詳細"
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
             <Typography className={classes.heading}>
               <CardHeader
                 component="span"
-                // className={classes.heading}
                 avatar={<Avatar className={classes.avatar}>{elm.id}</Avatar>}
                 title={elm.name}
               />
@@ -432,11 +398,6 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
                   >
                     キャンセル
                   </Button>
-                  {/* <CardActions
-                  className={classes.action}
-                  component="p"
-                  disableSpacing
-                > */}
                   <IconButton aria-label="編集" onClick={() => handleEdit(elm)}>
                     <EditOutlinedIcon />
                   </IconButton>

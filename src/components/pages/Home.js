@@ -39,7 +39,6 @@ const Home = () => {
     history.push("/signup");
   };
 
-
   return (
     <div className={classes.root}>
       <Button
@@ -50,7 +49,7 @@ const Home = () => {
         size="large"
         color="primary"
       >
-       SignIn
+        SignIn
       </Button>
       <Button
         className={classes.button2}

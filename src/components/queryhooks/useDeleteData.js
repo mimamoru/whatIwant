@@ -35,7 +35,6 @@ export const useDeleteData = () => {
         if (type && paramId) {
           await deleteData(type, paramId)
             .then((res) => {
-              console.log(res);
               setResult(true);
               setIsError(false);
             })

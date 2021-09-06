@@ -78,7 +78,6 @@ const History = () => {
   const [buyHistoryRows, setBuyHistoryRows] = useState([]);
   const [cancelHistoryRows, setCancelHistoryRows] = useState([]);
   const { items, itsLoaging, itsErr } = useUserItems();
- 
 
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
@@ -166,6 +165,7 @@ const History = () => {
 
   return (
     <GenericTemplate title="History">
+      <hr />
       <div id="wrapper">
         <CustomizedSnackbars
           open={snackbar.open}

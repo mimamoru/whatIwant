@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -86,9 +86,12 @@ const SignIn = memo(() => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        Welcome!
+          Welcome!
         </Typography>
-        <form onSubmit={handleSubmit((data) => signin(data.mail,data.password))} className="form">
+        <form
+          onSubmit={handleSubmit((data) => signin(data.mail, data.password))}
+          className="form"
+        >
           <Controller
             control={control}
             name="mail"
@@ -139,7 +142,7 @@ const SignIn = memo(() => {
             className={classes.submit}
             disabled={!confirm}
           >
-           SignIn
+            SignIn
           </Button>
           <Grid container>
             <Grid item>
@@ -150,7 +153,7 @@ const SignIn = memo(() => {
                 className={classes.button}
                 onClick={handlePageChange}
               >
-               SignUp
+                SignUp
               </Button>
             </Grid>
           </Grid>

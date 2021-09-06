@@ -49,15 +49,12 @@ const valuetext = (value) => {
 
 //更新データ
 const putData = (defaultValues, data) => {
-  console.log("更新データ", data);
-  console.log("defaultValues", defaultValues);
-
   const id = defaultValues.itemId;
   const putItemData = {
     id: id,
     name: data.itemName,
     budget: data.budget,
-    limit: data.limitDate?getCurrentDate(data.limitDate):null,
+    limit: data.limitDate ? getCurrentDate(data.limitDate) : null,
     level: data.level,
     url: data.url,
     remark: data.remark,
@@ -95,6 +92,9 @@ const putData = (defaultValues, data) => {
     deleteCompareData: deleteCompareData,
   };
 };
+
+const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const Edit = () => {
   const history = useHistory();
   const location = useLocation();
@@ -104,6 +104,7 @@ const Edit = () => {
   const itemInfo = location.state.itemInfo;
   const option = location.state.option;
 
+  //商品情報取得コンテキスト
   const { items, itsLoaging, itsErr } = useUserItems();
 
   //情報更新hook
@@ -115,7 +116,7 @@ const Edit = () => {
       itemId: itemInfo.id || "",
       itemName: itemInfo.name || "",
       budget: itemInfo.budget || "",
-      limitDate: itemInfo.limit?.split("T")[0] || "",
+      limitDate: itemInfo.limit?.split(" ")[0] || "",
       level: itemInfo.level || 50,
       url: itemInfo.url || "",
       remark: itemInfo.remark || "",
@@ -130,7 +131,7 @@ const Edit = () => {
     }),
     [itemInfo, option]
   );
-
+  //FORMの指定
   const {
     control,
     handleSubmit,
@@ -177,8 +178,6 @@ const Edit = () => {
     setOptions([...option]);
   }, [items, itsErr, itemInfo]);
 
-  const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
   //ホーム画面に遷移する処理
   const handleBack = useCallback(async () => {
     await _sleep(2000);
@@ -197,7 +196,6 @@ const Edit = () => {
           defaultValues,
           data
         );
-        console.log(putItemData, postCompareData, deleteCompareData);
         setCondition({
           putItemData: putItemData,
           postCompareData: postCompareData,
@@ -209,7 +207,6 @@ const Edit = () => {
   );
 
   useEffect(() => {
-    console.log("itperr*****", itPErr, result);
     if (itPErr || result === "error") {
       //商品が更新、削除されていた場合は警告を表示し処理を終了する
       const message =

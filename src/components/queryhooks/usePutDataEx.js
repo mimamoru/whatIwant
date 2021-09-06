@@ -10,8 +10,7 @@ export const usePutDataEx = () => {
   const reroadItem = useReroadItems();
   const reroadCompare = useReroadCompares();
   //商品更新hook
-  const [{ id: itId, isLoading: itPLoaging, isError: itPErr }, setItData] =
-    usePutData();
+  const [{ id: itId, isError: itPErr }, setItData] = usePutData();
 
   const [result, setResult] = useState(false);
 
@@ -37,7 +36,6 @@ export const usePutDataEx = () => {
   }, [condition, setItData, itId]);
 
   useEffect(() => {
-    console.log(itId, condition);
     if (!condition || !itId) return;
     const postCompareData = condition.postCompareData;
     const deleteCompareData = condition.deleteCompareData;
@@ -48,7 +46,6 @@ export const usePutDataEx = () => {
       if (!unmounted) {
         await postArrData(authUser[0].id, postCompareData, itId)
           .then((res) => {
-            console.log(res);
             resultArr.push(res);
           })
           .catch(() => {
@@ -57,7 +54,6 @@ export const usePutDataEx = () => {
 
         await deleteArrData(deleteCompareData)
           .then((res) => {
-            console.log(res);
             resultArr.push(res);
           })
           .catch(() => {

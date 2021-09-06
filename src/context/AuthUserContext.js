@@ -49,7 +49,6 @@ const AuthUserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(usErr, user);
     if (!user) {
       return;
     }

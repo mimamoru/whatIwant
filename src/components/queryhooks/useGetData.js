@@ -23,7 +23,6 @@ export const useGetData = () => {
         }
         await getData(type, id)
           .then((res) => {
-            console.log(res);
             setData(res);
             setIsError(false);
           })

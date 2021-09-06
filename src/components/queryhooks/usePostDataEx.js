@@ -10,8 +10,7 @@ export const usePostDataEx = () => {
   const reroadItem = useReroadItems();
   const reroadCompare = useReroadCompares();
   //商品情報登録hook
-  const [{ id: itId, isLoading: itPLoaging, isError: itPErr }, setitPData] =
-    usePostData();
+  const [{ id: itId, isError: itPErr }, setitPData] = usePostData();
 
   const [result, setResult] = useState(false);
 
@@ -20,7 +19,6 @@ export const usePostDataEx = () => {
   useEffect(() => {
     if (!condition || itId) return;
     const itemData = condition.itemData;
-    console.log(itemData);
     let unmounted = false;
     const post = () => {
       if (!unmounted) {
@@ -40,16 +38,13 @@ export const usePostDataEx = () => {
   useEffect(() => {
     if (!condition || !itId) return;
     const compareData = condition.compareData;
-    console.log(compareData, itId);
     if (!compareData) return;
     let unmounted = false;
     const post = async () => {
       if (!unmounted) {
         await postArrData(authUser[0].id, compareData, itId)
           .then((res) => {
-            console.log(res);
             setResult(res);
-           
           })
           .catch(() => {
             setResult("error");

@@ -175,6 +175,42 @@
         "recordDate": "2021-09-05 21:23:8"
       },
       "userId": "U001"
+    },
+    {
+      "id": "IT009U001",
+      "name": "sample",
+      "budget": 122,
+      "limit": "2021-10-06T15:00:00.000Z",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-06 21:17:13",
+        "recordDate": "2021-09-06 21:17:13"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT010U001",
+      "name": "aaaaa",
+      "budget": 23453,
+      "limit": "2021-10-01 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-06 21:17:13",
+        "recordDate": "2021-09-06 21:46:45"
+      },
+      "userId": "U001"
     }
   ],
   "compares": [
@@ -212,6 +248,18 @@
       "id": "CP012U001",
       "compare0": "IT007U001",
       "compare1": "IT008U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP013U001",
+      "compare0": "IT006U001",
+      "compare1": "IT009U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP014U001",
+      "compare0": "IT006U001",
+      "compare1": "IT010U001",
       "userId": "U001"
     }
   ]

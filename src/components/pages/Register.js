@@ -101,9 +101,11 @@ const Register = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(schema),
   });
+
+  //商品情報取得コンテキスト
+  const { items, itsLoaging, itsErr } = useUserItems();
   //情報登録hook
   const [{ result, itId, itPErr }, setCondition] = usePostDataEx();
-  const { items, itsLoaging, itsErr } = useUserItems();
 
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
@@ -132,7 +134,6 @@ const Register = () => {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
-    console.log(items);
     const option = items
       .filter((e) => e.record?.decideDate === null)
       .map((e) => ({
@@ -148,38 +149,32 @@ const Register = () => {
   const handleBack = useCallback(async () => {
     await _sleep(2000);
     //検索条件をパラメータとして一覧画面に遷移する
-    history.push("/search", {});
+    history.push("/search");
   }, [history]);
 
   //登録処理
   const handleRegister = useCallback(
     (data) => {
-      if(!result){
-      const { postItemData, postCompareData } = postData(data);
-      console.log(
-        "postItemData",
-        postItemData,
-        "postCompareData",
-        postCompareData
-      );
-      setCondition({ itemData: postItemData, compareData: postCompareData });
-    }},
-    [result,setCondition]
+      if (!result) {
+        const { postItemData, postCompareData } = postData(data);
+        setCondition({ itemData: postItemData, compareData: postCompareData });
+      }
+    },
+    [result, setCondition]
   );
 
+  //登録処理結果表示　登録後、一覧、一覧画面に遷移
   useEffect(() => {
-    console.log(itPErr,result )
     if (itPErr || result === "error") {
       setSnackbar({ open: true, severity: "error", message: err });
       return;
     }
     if (result) {
-      console.log(itId);
       setSnackbar({ open: true, severity: "success", message: register });
       reset();
       handleBack();
     }
-  }, [itPErr, itId, reset, result,handleBack]);
+  }, [itPErr, itId, reset, result, handleBack]);
 
   return (
     <GenericTemplate title="Register">
@@ -194,7 +189,6 @@ const Register = () => {
         onSubmit={handleSubmit((data) => handleRegister(data))}
         className="form"
       >
-        {/* {itPLoaging && <CircularIndeterminate component="div" />} */}
         <hr />
         <div className="container">
           <section>
@@ -333,8 +327,6 @@ const Register = () => {
             </Button>
           </section>
         </div>
-
-        <hr />
       </form>
     </GenericTemplate>
   );

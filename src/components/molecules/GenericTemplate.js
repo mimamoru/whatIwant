@@ -103,11 +103,12 @@ const GenericTemplate = (props) => {
   const classes = useStyles();
   const authUser = useAuthUser();
   const signout = useSignout();
-  console.log(authUser)
-  //authUser[0].id
+
   const [open, setOpen] = React.useState(true);
+
   //確認ダイアログメッセージののメッセージの状態管理
   const [confDlg, setConfDlg] = React.useState("");
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -146,7 +147,7 @@ const GenericTemplate = (props) => {
             noWrap
             className={classes.title}
           >
-           What I Want...?
+            What I want...?
           </Typography>
           <Typography
             component="h5"
@@ -155,9 +156,9 @@ const GenericTemplate = (props) => {
             noWrap
             className={classes.user}
           >
-            {authUser&&authUser[0].name}
+            {authUser && authUser[0].name}
           </Typography>
-         
+
           <IconButton onClick={() => setConfDlg("signout")} color="inherit">
             <ExitToAppIcon />
           </IconButton>

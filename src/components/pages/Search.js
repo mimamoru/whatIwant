@@ -50,9 +50,17 @@ const schema = BaseYup.object().shape({
 
 const SelectItems = (
   items,
-  { itemId="", itemName="", minBudget="", maxBudget="", keyword="", condition=false, sortIndex="id" }
+  {
+    itemId = "",
+    itemName = "",
+    minBudget = "",
+    maxBudget = "",
+    keyword = "",
+    condition = false,
+    sortIndex = "id",
+  }
 ) => {
-  console.log("SelectItems",items,sortIndex)
+  console.log("SelectItems", items, sortIndex);
   if (!items) return;
   const keywords = keyword ? keyword.split(/\s+/) : "";
   let result = items
@@ -70,7 +78,7 @@ const SelectItems = (
         return keywords.every((key) => str.indexOf(key) !== -1);
       }
     });
-   
+
   switch (sortIndex) {
     case "budget":
       result = result.sort((a, b) => (a.budget < b.budget ? -1 : 1));
@@ -130,17 +138,15 @@ const defaultValues = {
 const Search = () => {
   const classes = useStyles();
   const location = useLocation();
- 
-  const { items, itsLoaging, itsErr } = useUserItems();
-  console.log("search",items);
-  console.log(items, itsLoaging, itsErr);
-
-  
 
   //遷移パラメータの取得
   const paramCondition = location.state
     ? location.state.condition
     : defaultValues;
+
+  //商品情報取得コンテキスト
+  const { items, itsLoaging, itsErr } = useUserItems();
+
   //検索条件の管理
   const [allCondition, setAllCondition] = useState({ paramCondition });
   //スナックバーの状態管理
@@ -192,20 +198,17 @@ const Search = () => {
         condition: condition.condition,
         sortIndex: condition.sortIndex,
       };
-      console.log(items, itsLoaging, itsErr);
       setAllCondition({ ...conditions });
 
       if (itsErr) {
         setSnackbar({ open: true, severity: "error", message: err });
         return;
       }
-      console.log("conditions",conditions)
       const result = SelectItems(items, conditions);
       const length = result.length;
       if (length === 0) {
         setSnackbar({ open: true, severity: "warning", message: nodata });
       }
-
       setResultData([...result]);
     }
   };
@@ -223,14 +226,12 @@ const Search = () => {
         severity={snackbar.severity}
         message={snackbar.message}
       />
-
       <form
         style={{ width: 650 }}
         onSubmit={handleSubmit((data) => getData(data))}
         className="form"
       >
         <hr />
-
         <div className="container">
           <section>
             <Controller
@@ -373,8 +374,7 @@ const Search = () => {
         {resultData?.map((elm) => (
           <SimpleAccordion key={elm.id} elm={elm} allCondition={allCondition} />
         ))}
-         <div style={{ textAlign: "center", display: "inline-block" }}>
-      </div>
+        <div style={{ textAlign: "center", display: "inline-block" }}></div>
       </div>
     </GenericTemplate>
   );
