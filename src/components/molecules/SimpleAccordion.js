@@ -255,6 +255,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
 
   //購入処理
   const handlePurchase = useCallback(async () => {
+    if (itId) return;
     setConfDlg("");
     const qty = inputQtyRef.current.value;
     const cost = inputCostRef.current.value;
@@ -291,13 +292,14 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
     elm.record.cost = cost;
     //商品情報更新
     setItPData({ type: "item", data: elm, decide: true });
-  }, [elm, setItPData]);
+  }, [elm, setItPData, itId]);
   //キャンセル処理
   const handleCancel = useCallback(() => {
+    if (itId) return;
     setConfDlg("");
     //商品情報更新
     setItPData({ type: "item", data: elm, decide: true });
-  }, [elm, setItPData]);
+  }, [elm, setItPData, itId]);
 
   return (
     <>
@@ -339,9 +341,8 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.heading}>
+            <Typography component="div" className={classes.heading}>
               <CardHeader
-                component="span"
                 avatar={<Avatar className={classes.avatar}>{elm.id}</Avatar>}
                 title={elm.name}
               />
@@ -365,7 +366,11 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
                   />
                   円<p id={`${elm.id}_cost`} className="error"></p>
                 </Typography>
-                <Typography component="p" variant="body2" color="textSecondary">
+                <Typography
+                  component="div"
+                  variant="body2"
+                  color="textSecondary"
+                >
                   <label> 数量*:</label>
                   <TextField
                     id={`${elm.id}_qtyInput`}
@@ -407,13 +412,12 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
                   >
                     <DeleteForeverOutlinedIcon />
                   </IconButton>
-                  {/* </CardActions> */}
                 </Typography>
               </CardContent>
             </Typography>
           </AccordionSummary>
           <AccordionDetails className={classes.details}>
-            <CardContent>
+            <CardContent component="div">
               <Typography component="div" paragraph>
                 購入希望日：{elm.limit?.split("T")[0]}
               </Typography>

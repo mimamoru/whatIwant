@@ -11,7 +11,7 @@ import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
 import { signUpErr } from "../modules/messages";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useAuthUser, useSignin } from "../../context/AuthUserContext";
+import { useSignin } from "../../context/AuthUserContext";
 import Container from "@material-ui/core/Container";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";

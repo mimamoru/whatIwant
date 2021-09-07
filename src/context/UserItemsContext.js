@@ -22,16 +22,20 @@ const UserItemsProvider = ({ children }) => {
   //商品情報取得(複数)
   useEffect(() => {
     const fetch = () => {
+      console.log("unmounted1");
       if (reroadItems && useAuthUser) {
-        setItCondition({
+        console.log("unmounted2");
+        const newData=Object.assign({}, {
           type: "item",
           param: "&delete=false",
-        });
+        })
+        setItCondition(()=>newData);
         setReroadItems(false);
       }
     };
     fetch();
   }, [setItCondition, reroadItems]);
+  console.log("unmounted3",items);
 
   return (
     <UserReroadItemsContext.Provider value={reroadItem}>

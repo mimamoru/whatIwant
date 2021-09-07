@@ -29,6 +29,16 @@
         "createDate": "2020-11-5",
         "recordDate": "2020-12-5"
       }
+    },
+    {
+      "id": "U004",
+      "name": "みなみ",
+      "mail": "aaa@ppp.com",
+      "password": "Pass@123",
+      "record": {
+        "createDate": "2021-09-07 21:2:28",
+        "recordDate": "2021-09-07 21:2:28"
+      }
     }
   ],
   "items": [
@@ -211,6 +221,276 @@
         "recordDate": "2021-09-06 21:46:45"
       },
       "userId": "U001"
+    },
+    {
+      "id": "IT011U001",
+      "name": "777",
+      "budget": 1234,
+      "limit": "2021-09-15T15:00:00.000Z",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-06 21:46:45",
+        "recordDate": "2021-09-06 21:46:45"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT001U004",
+      "name": "sample",
+      "budget": 1234,
+      "limit": "2021-10-07T15:00:00.000Z",
+      "level": 70,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:2:28",
+        "recordDate": "2021-09-07 21:2:28"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT002U004",
+      "name": "s2",
+      "budget": 1235,
+      "limit": "2021-10-07T15:00:00.000Z",
+      "level": 67,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": "1",
+        "cost": "1235",
+        "decideDate": "2021-09-07 21:30:9",
+        "createDate": "2021-09-07 21:2:28",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT003U004",
+      "name": "s3",
+      "budget": 777,
+      "limit": "2021-10-01 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": "1",
+        "cost": "777",
+        "decideDate": "2021-09-07 21:30:9",
+        "createDate": "2021-09-07 21:2:28",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT004U004",
+      "name": "kkk",
+      "budget": 11111,
+      "limit": "2021-09-24 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": "2021-09-07 21:30:9",
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT005U004",
+      "name": "aaa",
+      "budget": 1233,
+      "limit": "2021-10-09 0:0:0",
+      "level": 62,
+      "url": "",
+      "remark": "",
+      "delete": true,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT006U004",
+      "name": "aaaaaaaaaaaaaaaaaa",
+      "budget": 3333,
+      "limit": "2021-10-02 0:0:0",
+      "level": 89,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": "1",
+        "cost": "3333",
+        "decideDate": "2021-09-07 21:30:9",
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT007U004",
+      "name": "aaacda",
+      "budget": 300,
+      "limit": null,
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": "2021-09-07 21:30:9",
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT008U004",
+      "name": "あいう",
+      "budget": 345,
+      "limit": "2021-09-15 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT009U004",
+      "name": "mmm",
+      "budget": 999,
+      "limit": "2021-10-08 0:0:0",
+      "level": 80,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT010U004",
+      "name": "ooo",
+      "budget": 9999,
+      "limit": "2021-10-08 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT011U004",
+      "name": "momomo",
+      "budget": 1234,
+      "limit": "2021-09-25 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT012U004",
+      "name": "oooo、、、",
+      "budget": 56890,
+      "limit": "2021-10-09 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 21:30:9",
+        "recordDate": "2021-09-07 21:30:9"
+      },
+      "userId": "U004"
+    },
+    {
+      "id": "IT012U001",
+      "name": "kkkkkkkkkkkkk大岡山",
+      "budget": 22222,
+      "limit": "2021-10-08 0:0:0",
+      "level": 95,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 22:27:20",
+        "recordDate": "2021-09-07 22:27:20"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT013U001",
+      "name": "lpllplplp",
+      "budget": 2222222,
+      "limit": "2021-10-06 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-07 22:27:20",
+        "recordDate": "2021-09-07 22:27:20"
+      },
+      "userId": "U001"
     }
   ],
   "compares": [
@@ -260,6 +540,138 @@
       "id": "CP014U001",
       "compare0": "IT006U001",
       "compare1": "IT010U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP015U001",
+      "compare0": "IT006U001",
+      "compare1": "IT011U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP016U001",
+      "compare0": "IT009U001",
+      "compare1": "IT011U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP001U004",
+      "compare0": "IT001U004",
+      "compare1": "IT002U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP002U004",
+      "compare0": "IT001U004",
+      "compare1": "IT003U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP003U004",
+      "compare0": "IT002U004",
+      "compare1": "IT003U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP004U004",
+      "compare0": "IT001U004",
+      "compare1": "IT004U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP005U004",
+      "compare0": "IT002U004",
+      "compare1": "IT004U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP006U004",
+      "compare0": "IT001U004",
+      "compare1": "IT005U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP007U004",
+      "compare0": "IT003U004",
+      "compare1": "IT005U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP008U004",
+      "compare0": "IT001U004",
+      "compare1": "IT006U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP009U004",
+      "compare0": "IT004U004",
+      "compare1": "IT006U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP010U004",
+      "compare0": "IT001U004",
+      "compare1": "IT007U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP011U004",
+      "compare0": "IT005U004",
+      "compare1": "IT007U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP012U004",
+      "compare0": "IT001U004",
+      "compare1": "IT008U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP013U004",
+      "compare0": "IT001U004",
+      "compare1": "IT009U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP014U004",
+      "compare0": "IT001U004",
+      "compare1": "IT010U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP015U004",
+      "compare0": "IT001U004",
+      "compare1": "IT011U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP016U004",
+      "compare0": "IT001U004",
+      "compare1": "IT012U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP017U004",
+      "compare0": "IT010U004",
+      "compare1": "IT012U004",
+      "userId": "U004"
+    },
+    {
+      "id": "CP017U001",
+      "compare0": "IT006U001",
+      "compare1": "IT012U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP018U001",
+      "compare0": "IT006U001",
+      "compare1": "IT013U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP019U001",
+      "compare0": "IT010U001",
+      "compare1": "IT013U001",
       "userId": "U001"
     }
   ]

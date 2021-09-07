@@ -116,7 +116,7 @@ const Edit = () => {
       itemId: itemInfo.id || "",
       itemName: itemInfo.name || "",
       budget: itemInfo.budget || "",
-      limitDate: itemInfo.limit?.split(" ")[0] || "",
+      limitDate: itemInfo.limit?.split(" ")[0] || "", 
       level: itemInfo.level || 50,
       url: itemInfo.url || "",
       remark: itemInfo.remark || "",

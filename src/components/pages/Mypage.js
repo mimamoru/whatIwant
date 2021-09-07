@@ -117,7 +117,7 @@ const Mypage = () => {
     <GenericTemplate title="MyPage">
       <hr />
       <div id="wrapper" className={classes.root}>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <Grid item xs={12}>

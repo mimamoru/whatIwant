@@ -22,6 +22,9 @@ const AuthUserProvider = ({ children }) => {
   //ユーザー情報取得hook
   const [{ data: user, isLoading: usLoaging, isError: usErr }, setUsCondition] =
     useSelectDatas();
+  
+    const [reroad, setReroad] = useState(true);
+
   //スナックバーの状態管理
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -41,10 +44,12 @@ const AuthUserProvider = ({ children }) => {
   );
 
   const signin = (mail, password) => {
+    setReroad(!reroad)
     //ログイン処理 DB照合
     setUsCondition({
       type: "user",
       param: `?mail=${mail}&password=${password}`,
+      reroad:reroad
     });
   };
 

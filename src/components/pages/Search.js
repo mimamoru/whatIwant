@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import ReactSelect from "react-select";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUserItems } from "../../context/UserItemsContext";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -60,7 +60,6 @@ const SelectItems = (
     sortIndex = "id",
   }
 ) => {
-  console.log("SelectItems", items, sortIndex);
   if (!items) return;
   const keywords = keyword ? keyword.split(/\s+/) : "";
   let result = items

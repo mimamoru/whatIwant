@@ -65,7 +65,7 @@ const postData = (data) => {
     id: null,
     name: data.itemName,
     budget: data.budget,
-    limit: data.limitDate,
+    limit: data.limitDate ? getCurrentDate(data.limitDate) : null,
     level: data.level,
     url: data.url,
     remark: data.remark,

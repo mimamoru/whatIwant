@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import AuthUserProvider, { useAuthUser } from "./context/AuthUserContext";
 import UserComparesProvider from "./context/UserComparesContext";
 import UserItemsProvider from "./context/UserItemsContext";
