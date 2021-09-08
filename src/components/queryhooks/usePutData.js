@@ -6,7 +6,7 @@ import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePutData = () => {
   const authUser = useAuthUser();
-  const reroadItem = useReroadItems();
+  const { itemDispatch } = useReroadItems();
   const reroadCompare = useReroadCompares();
   const [id, setId] = useState(null);
 
@@ -51,11 +51,14 @@ export const usePutData = () => {
           if (decide) {
             data.record.decideDate = currentTime;
           }
-          if (type === "item" || type === "compare")
-            data.userId = authUser[0].id;
+          if (type === "item") data.userId = authUser[0].id;
           await putData(type, data.id, data)
             .then((res) => {
-              setId(res);
+              setId(res.id);
+              itemDispatch({
+                type: "put",
+                data: res,
+              });
               setIsError(false);
             })
             .catch((err) => {
@@ -71,12 +74,8 @@ export const usePutData = () => {
     return () => {
       //setIsLoading(false);
       unmounted = true;
-      if (decide) {
-        if (type === "item") reroadItem();
-        if (type === "compare") reroadCompare();
-      }
     };
-  }, [condition, reroadItem, id, reroadCompare, authUser]);
+  }, [condition, itemDispatch, id, reroadCompare, authUser]);
 
   return [{ id, isLoading, isError }, setCondition];
 };

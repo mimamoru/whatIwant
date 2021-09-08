@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
+import { indigo } from "@material-ui/core/colors";
 
 export const useSelectDatas = () => {
   const authUser = useAuthUser();
@@ -12,6 +13,7 @@ export const useSelectDatas = () => {
   useEffect(() => {
     const { type, param } = condition;
     let con;
+
     if (!type || data) return;
     setIsError(false);
     setIsLoading(true);
@@ -20,7 +22,7 @@ export const useSelectDatas = () => {
     } else {
       if (!authUser) {
         setIsLoading(false);
-        setIsError(999);
+        setIsError(true);
         return;
       } else {
         con = param

@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { usePutData } from "./index";
 import { postArrData, deleteArrData } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
-import { useReroadItems } from "../../context/UserItemsContext";
 import { useReroadCompares } from "../../context/UserComparesContext";
 
 export const usePutDataEx = () => {
   const authUser = useAuthUser();
-  const reroadItem = useReroadItems();
-  const reroadCompare = useReroadCompares();
+  const { compareDispatch } = useReroadCompares();
+
   //商品更新hook
   const [{ id: itId, isError: itPErr }, setItData] = usePutData();
 
@@ -46,7 +45,11 @@ export const usePutDataEx = () => {
       if (!unmounted) {
         await postArrData(authUser[0].id, postCompareData, itId)
           .then((res) => {
-            resultArr.push(res);
+            compareDispatch({
+              type: "add",
+              data: res,
+            });
+            resultArr.push(true);
           })
           .catch(() => {
             resultArr.push(false);
@@ -54,7 +57,11 @@ export const usePutDataEx = () => {
 
         await deleteArrData(deleteCompareData)
           .then((res) => {
-            resultArr.push(res);
+            resultArr.push(true);
+            compareDispatch({
+              type: "delete",
+              data: res,
+            });
           })
           .catch(() => {
             resultArr.push(false);
@@ -70,10 +77,8 @@ export const usePutDataEx = () => {
     // clean up関数（Unmount時の処理）
     return () => {
       unmounted = true;
-      reroadItem();
-      reroadCompare();
     };
-  }, [itId, condition, authUser, reroadCompare, reroadItem]);
+  }, [itId, condition, authUser, compareDispatch]);
 
   return [{ result, itPErr }, setCondition];
 };

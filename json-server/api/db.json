@@ -491,6 +491,96 @@
         "recordDate": "2021-09-07 22:27:20"
       },
       "userId": "U001"
+    },
+    {
+      "id": "IT014U001",
+      "name": "aaaaaaaaaaaaa",
+      "budget": 22222,
+      "limit": "2021-09-24 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-08 6:11:32",
+        "recordDate": "2021-09-08 6:11:32"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT015U001",
+      "name": "llll",
+      "budget": 678,
+      "limit": "2021-10-01 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-08 20:50:57",
+        "recordDate": "2021-09-08 20:50:57"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT016U001",
+      "name": "あいうえおかきくけこ",
+      "budget": 77777,
+      "limit": "2021-10-09 0:0:0",
+      "level": 88,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-08 23:42:1",
+        "recordDate": "2021-09-09 0:5:17"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT017U001",
+      "name": "aaaasss",
+      "budget": 3333666,
+      "limit": "2021-11-03 0:0:0",
+      "level": 63,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-09 0:5:17",
+        "recordDate": "2021-09-09 0:5:17"
+      },
+      "userId": "U001"
+    },
+    {
+      "id": "IT018U001",
+      "name": "aaa44",
+      "budget": 333,
+      "limit": "2021-09-25 0:0:0",
+      "level": 50,
+      "url": "",
+      "remark": "",
+      "delete": false,
+      "record": {
+        "qty": null,
+        "cost": null,
+        "decideDate": null,
+        "createDate": "2021-09-09 0:5:17",
+        "recordDate": "2021-09-09 0:5:17"
+      },
+      "userId": "U001"
     }
   ],
   "compares": [
@@ -672,6 +762,54 @@
       "id": "CP019U001",
       "compare0": "IT010U001",
       "compare1": "IT013U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP020U001",
+      "compare0": "IT010U001",
+      "compare1": "IT014U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP021U001",
+      "compare0": "IT010U001",
+      "compare1": "IT015U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP024U001",
+      "compare0": "IT015U001",
+      "compare1": "IT017U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP025U001",
+      "compare0": "IT009U001",
+      "compare1": "IT017U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP027U001",
+      "compare0": "IT013U001",
+      "compare1": "IT018U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP028U001",
+      "compare0": "IT006U001",
+      "compare1": "IT016U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP029U001",
+      "compare0": "IT009U001",
+      "compare1": "IT018U001",
+      "userId": "U001"
+    },
+    {
+      "id": "CP030U001",
+      "compare0": "IT011U001",
+      "compare1": "IT018U001",
       "userId": "U001"
     }
   ]

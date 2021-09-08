@@ -46,14 +46,26 @@ const calcItemData = (items) => {
     0
   );
 
-  const statistics1 = pcsItems.map((e) => ({
-    decideDate: moment(
-      new Date(e.record.decideDate.split(" ")[0]).getTime()
-    ).format("YYYY-MM-DD"),
-    amount: e.record.qty * e.record.cost,
-  }));
-
-  statistics1.sort((a, b) => a.decideDate - b.decideDate);
+  const statistics1 = pcsItems
+    .map((e) => ({
+      decideDate: moment(
+        new Date(e.record.decideDate.split(" ")[0]).getTime()
+      ).format("YYYY-MM-DD"),
+      amount: e.record.qty * e.record.cost,
+    }))
+    .reduce((res, cur) => {
+      const elm = res.find((val) => val.decideDate === cur.decideDate);
+      if (elm) {
+        elm.amount += cur.amount;
+      } else {
+        res.push({
+          decideDate: cur.decideDate,
+          amount: cur.amount,
+        });
+      }
+      return res;
+    }, []);
+  statistics1.sort((a, b) => new Date(a.decideDate) - new Date(b.decideDate));
 
   const statistics2 = pcsItems.map((e) => ({
     budget: e.budget,

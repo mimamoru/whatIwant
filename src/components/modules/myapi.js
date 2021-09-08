@@ -57,7 +57,7 @@ export const postData = async (type = "", data = {}) => {
   await axios
     .post(path, data)
     .then((res) => {
-      response = res.data?.id;
+      response = res.data;
     })
     .catch((err) => {
       throw new Error(err.response?.status);
@@ -90,7 +90,7 @@ export const postArrData = async (uid, dataArr = [], itId = "") => {
       response.push(res);
     });
   }
-  return response.length === length;
+  return response;
 };
 
 //ローカルサーバーの値を更新する
@@ -100,7 +100,7 @@ export const putData = async (type = "", id = "", data = {}) => {
   await axios
     .put(`${path}/${id}`, data)
     .then((res) => {
-      response = res.data?.id;
+      response = res.data;
     })
     .catch((err) => {
       throw new Error(err.response?.status);
@@ -140,7 +140,7 @@ export const deleteArrData = async (dataArr = []) => {
       response.push(true);
     });
   }
-  return response.length === length;
+  return idArr;
 };
 
 //現在日時取得

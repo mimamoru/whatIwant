@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { usePostData } from "../queryhooks/index";
-import { useReroadItems } from "../../context/UserItemsContext";
+
 import { useReroadCompares } from "../../context/UserComparesContext";
 import { postArrData } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
 
 export const usePostDataEx = () => {
   const authUser = useAuthUser();
-  const reroadItem = useReroadItems();
-  const reroadCompare = useReroadCompares();
+  const { compareDispatch } = useReroadCompares();
+
   //商品情報登録hook
   const [{ id: itId, isError: itPErr }, setitPData] = usePostData();
 
   const [result, setResult] = useState(false);
 
   const [condition, setCondition] = useState(null);
-  // const { itemData, data } = condition;
+
   useEffect(() => {
     if (!condition || itId) return;
     const itemData = condition.itemData;
@@ -44,7 +44,11 @@ export const usePostDataEx = () => {
       if (!unmounted) {
         await postArrData(authUser[0].id, compareData, itId)
           .then((res) => {
-            setResult(res);
+            setResult(true);
+            compareDispatch({
+              type: "add",
+              data: res,
+            });
           })
           .catch(() => {
             setResult("error");
@@ -55,10 +59,8 @@ export const usePostDataEx = () => {
     // clean up関数（Unmount時の処理）
     return () => {
       unmounted = true;
-      reroadItem();
-      reroadCompare();
     };
-  }, [authUser, condition, itId, reroadCompare, reroadItem]);
+  }, [authUser, condition, itId, compareDispatch]);
   return [{ result, itId, itPErr }, setCondition];
 };
 

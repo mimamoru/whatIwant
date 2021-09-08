@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { indigo } from "@material-ui/core/colors";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "react";
 import { useSelectDatas } from "../components/queryhooks/index";
 import { useAuthUser } from "./AuthUserContext";
 const UserItemsContext = createContext(null);
@@ -9,36 +16,49 @@ const UserReroadItemsContext = createContext({
 const UserItemsProvider = ({ children }) => {
   //商品情報取得hook(複数)
   const [
-    { data: items, isLoading: itsLoaging, isError: itsErr },
+    { data: itData, isLoading: itsLoaging, isError: itsErr },
     setItCondition,
   ] = useSelectDatas();
-  const [reroadItems, setReroadItems] = useState(true);
 
-  const reroadItem = () => {
-    //リロード処理
-    setReroadItems(true);
-  };
+  const [items, itemDispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case "add":
+        return [...state, { ...action.data }];
+      case "put":
+        const st = state.filter((e) => e.id !== action.data.id);
+        return [...st, { ...action.data }];
+      case "replace":
+        return [...action.data];
+      default:
+        return state;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!itData) return;
+    itemDispatch({
+      ...{
+        type: "replace",
+        data: itData,
+      },
+    });
+  }, [itData]);
 
   //商品情報取得(複数)
   useEffect(() => {
     const fetch = () => {
-      console.log("unmounted1");
-      if (reroadItems && useAuthUser) {
-        console.log("unmounted2");
-        const newData=Object.assign({}, {
+      if (useAuthUser) {
+        setItCondition({
           type: "item",
           param: "&delete=false",
-        })
-        setItCondition(()=>newData);
-        setReroadItems(false);
+        });
       }
     };
     fetch();
-  }, [setItCondition, reroadItems]);
-  console.log("unmounted3",items);
+  }, [setItCondition]);
 
   return (
-    <UserReroadItemsContext.Provider value={reroadItem}>
+    <UserReroadItemsContext.Provider value={{ itemDispatch }}>
       <UserItemsContext.Provider
         value={{
           items,

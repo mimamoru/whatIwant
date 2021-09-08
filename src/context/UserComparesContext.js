@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { useSelectDatas } from "../components/queryhooks/index";
 import { useAuthUser } from "./AuthUserContext";
 const UserComparesContext = createContext(null);
@@ -9,31 +9,46 @@ const UserReroadComparesContext = createContext({
 const UserComparesProvider = ({ children }) => {
   //比較情報取得hook
   const [
-    { data: compares, isLoading: cpLoaging, isError: cpErr },
+    { data: cpData, isLoading: cpLoaging, isError: cpErr },
     setCpCondition,
   ] = useSelectDatas();
-  const [reroadCompares, setReroadCompares] = useState(true);
 
-  const reroadCompare = () => {
-    //リロード処理
-    setReroadCompares(true);
-  };
+  const [compares, compareDispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case "add":
+        return [...state, ...action.data];
+      case "delete":
+        return [...state.filter((e) => action.data.indexOf(e) === -1)];
+      case "replace":
+        return [...action.data];
+      default:
+        return state;
+    }
+  }, []);
+
+  //商品情報取得(複数)
+  useEffect(() => {
+    if (!cpData) return;
+    compareDispatch({...{
+      type: "replece",
+      data: cpData,
+    }});
+  }, [cpData]);
 
   //比較情報取得
   useEffect(() => {
     const fetch = () => {
-      if (reroadCompares && useAuthUser) {
+      if (useAuthUser) {
         setCpCondition({
           type: "compare",
         });
-        setReroadCompares(false);
       }
     };
     fetch();
-  }, [setCpCondition, reroadCompares]);
+  }, [setCpCondition]);
 
   return (
-    <UserReroadComparesContext.Provider value={reroadCompare}>
+    <UserReroadComparesContext.Provider value={{ compareDispatch }}>
       <UserComparesContext.Provider
         value={{
           compares,
