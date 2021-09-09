@@ -28,7 +28,6 @@ const UnAuthRoute = ({ ...props }) => {
   const authUser = useAuthUser();
   const isAuthenticated =
     authUser !== null && authUser !== undefined && authUser?.length > 0;
-  console.log(authUser);
   if (isAuthenticated) {
     console.log(`すでにログイン済みです`);
     return <Redirect to={"/mypage"} />;

@@ -45,10 +45,12 @@ export const usePutDataEx = () => {
       if (!unmounted) {
         await postArrData(authUser[0].id, postCompareData, itId)
           .then((res) => {
-            compareDispatch({
-              type: "add",
-              data: res,
-            });
+            if (res.length > 0) {
+              compareDispatch({
+                type: "add",
+                data: res,
+              });
+            }
             resultArr.push(true);
           })
           .catch(() => {

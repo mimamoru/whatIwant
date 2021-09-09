@@ -142,7 +142,7 @@ const SignIn = memo(() => {
             className={classes.submit}
             disabled={!confirm}
           >
-            SignIn
+            はじめる
           </Button>
           <Grid container>
             <Grid item>

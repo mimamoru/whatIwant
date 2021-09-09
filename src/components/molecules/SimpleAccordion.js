@@ -419,7 +419,7 @@ const SimpleAccordion = memo(({ elm, allCondition }) => {
           <AccordionDetails className={classes.details}>
             <CardContent component="div">
               <Typography component="div" paragraph>
-                購入希望日：{elm.limit?.split("T")[0]}
+                購入希望日：{elm.limit?.split(" ")[0]}
               </Typography>
               <Typography component="div" paragraph>
                 必要性：{elm.level}%

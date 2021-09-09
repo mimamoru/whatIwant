@@ -163,7 +163,7 @@ const Register = () => {
     [result, setCondition]
   );
 
-  //登録処理結果表示　登録後、一覧、一覧画面に遷移
+  //登録処理結果表示　登録後一覧画面に遷移
   useEffect(() => {
     if (itPErr || result === "error") {
       setSnackbar({ open: true, severity: "error", message: err });
@@ -172,7 +172,7 @@ const Register = () => {
     if (result) {
       setSnackbar({ open: true, severity: "success", message: register });
       reset();
-      handleBack();
+     // handleBack();
     }
   }, [itPErr, itId, reset, result, handleBack]);
 

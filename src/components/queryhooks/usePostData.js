@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { postData, getCurrentDate, selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
+import { useReroadUsers } from "../../context/AuthUserContext";
 import { useReroadItems } from "../../context/UserItemsContext";
 
 export const usePostData = () => {
   const authUser = useAuthUser();
   const { itemDispatch } = useReroadItems();
+  const { userDispatch } = useReroadUsers();
 
   const [id, setId] = useState(null);
   const [condition, setCondition] = useState({ type: null, data: null });
@@ -61,13 +63,23 @@ export const usePostData = () => {
         if (type === "item" || type === "compare") data.userId = authUser[0].id;
         await postData(type, data)
           .then((res) => {
-            itemDispatch({
-              type: "add",
-              data: res,
-            });
             setId(res.id);
+            if (type === "item") {
+              itemDispatch({
+                type: "add",
+                data: res,
+              });
+            } else if (type === "user") {
+              userDispatch({
+                ...{
+                  type: "add",
+                  data: res,
+                },
+              });
+            }
             setIsError(false);
           })
+
           .catch((err) => {
             setIsError(err);
           });
@@ -77,10 +89,9 @@ export const usePostData = () => {
     post();
     // clean up関数（Unmount時の処理）
     return () => {
-      setIsLoading(false);
       unmounted = true;
     };
-  }, [condition, authUser, itemDispatch]);
+  }, [condition, authUser, itemDispatch, userDispatch]);
 
   return [{ id, isLoading, isError }, setCondition];
 };

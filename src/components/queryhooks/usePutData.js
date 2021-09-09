@@ -72,7 +72,6 @@ export const usePutData = () => {
     put();
     // clean up関数（Unmount時の処理）
     return () => {
-      //setIsLoading(false);
       unmounted = true;
     };
   }, [condition, itemDispatch, id, reroadCompare, authUser]);

@@ -45,10 +45,12 @@ export const usePostDataEx = () => {
         await postArrData(authUser[0].id, compareData, itId)
           .then((res) => {
             setResult(true);
-            compareDispatch({
-              type: "add",
-              data: res,
-            });
+            if (res.length > 0) {
+              compareDispatch({
+                type: "add",
+                data: res,
+              });
+            }
           })
           .catch(() => {
             setResult("error");

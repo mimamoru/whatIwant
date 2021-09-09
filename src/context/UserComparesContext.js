@@ -17,10 +17,10 @@ const UserComparesProvider = ({ children }) => {
     switch (action.type) {
       case "add":
         return [...state, ...action.data];
-      case "delete":
-        return [...state.filter((e) => action.data.indexOf(e) === -1)];
       case "replace":
         return [...action.data];
+      case "delete":
+        return [...state.filter((e) => action.data.every((id) => id !== e.id))];
       default:
         return state;
     }
@@ -29,10 +29,12 @@ const UserComparesProvider = ({ children }) => {
   //商品情報取得(複数)
   useEffect(() => {
     if (!cpData) return;
-    compareDispatch({...{
-      type: "replece",
-      data: cpData,
-    }});
+    compareDispatch({
+      ...{
+        type: "replace",
+        data: cpData,
+      },
+    });
   }, [cpData]);
 
   //比較情報取得

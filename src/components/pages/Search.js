@@ -179,7 +179,6 @@ const Search = () => {
 
   //金額範囲逆転チェック
   const getData = (condition) => {
-    console.log(condition);
     if (
       condition.minBudget !== null &&
       condition.maxBudget !== null &&

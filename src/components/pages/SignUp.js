@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback, useEffect } from "react";
+import React, { memo, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,17 +7,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import CustomizedSnackbars from "../atoms/CustomizedSnackbars";
-import { signUpErr } from "../modules/messages";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSignin } from "../../context/AuthUserContext";
+import { useSignup } from "../../context/AuthUserContext";
 import Container from "@material-ui/core/Container";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BaseYup } from "../modules/localeJP";
 import { useForm, Controller } from "react-hook-form";
-import { useSelectDatas, usePostData } from "../queryhooks/index";
-import CircularIndeterminate from "../atoms/CircularIndeterminate";
 import { useHistory } from "react-router-dom";
 //バリデーションの指定
 const schema = BaseYup.object().shape({
@@ -78,96 +74,8 @@ const SignUp = memo(() => {
   });
 
   const classes = useStyles();
-  const signin = useSignin();
+  const signup = useSignup();
   const [confirm, setcConfirm] = useState(false);
-
-  //ユーザー情報取得hook
-  const [{ data: user, isLoading: usLoaging }, setUsCondition] =
-    useSelectDatas();
-  //ユーザー情報登録hook
-  const [{ id }, setusPData] = usePostData();
-
-  const [formData, setFormData] = useState(null);
-
-  //スナックバーの状態管理
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    severity: "",
-    message: "",
-  });
-
-  //スナックバーを閉じる処理
-  const handleClose = useCallback(
-    (event, reason) => {
-      if (reason === "clickaway") {
-        return;
-      }
-      setSnackbar({ ...snackbar, open: false });
-    },
-    [snackbar]
-  );
-
-  useEffect(() => {
-    if (!formData) {
-      return;
-    }
-    let unmounted = false;
-    const signUpValid = () => {
-      if (!unmounted) {
-        setUsCondition({
-          type: "user",
-          param: `?mail=${formData.mail}`,
-        });
-      }
-    };
-    signUpValid();
-    // clean up関数（Unmount時の処理）
-    return () => {
-      unmounted = true;
-    };
-  }, [formData, setUsCondition]);
-
-  useEffect(() => {
-    if (!user) return;
-    let unmounted = false;
-
-    console.log(user);
-    if (user && user.length > 0) {
-      setSnackbar({ open: true, severity: "error", message: signUpErr });
-      unmounted = true;
-      return;
-    }
-    const handleSignUp = () => {
-      if (!unmounted) {
-        setusPData({
-          type: "user",
-          data: {
-            id: null,
-            name: formData.name,
-            mail: formData.mail,
-            password: formData.password,
-            record: {
-              createDate: "",
-              recordDate: "",
-            },
-          },
-        });
-      }
-    };
-    handleSignUp();
-    // clean up関数（Unmount時の処理）
-    return () => {
-      unmounted = true;
-    };
-  }, [user, formData, setusPData]);
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    console.log(formData.mail, formData.password);
-    signin(formData.mail, formData.password);
-  }, [formData, id, signin]);
 
   const handlePageChange = () => {
     history.push("/signin");
@@ -183,17 +91,8 @@ const SignUp = memo(() => {
         <Typography component="h1" variant="h5">
           Hello!
         </Typography>
-        <CustomizedSnackbars
-          open={snackbar.open}
-          handleClose={handleClose}
-          severity={snackbar.severity}
-          message={snackbar.message}
-        />
-        {usLoaging && <CircularIndeterminate component="div" />}
-        <form
-          onSubmit={handleSubmit((data) => setFormData(data))}
-          className="form"
-        >
+
+        <form onSubmit={handleSubmit((data) => signup(data))} className="form">
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Controller

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { selectDatas } from "../modules/myapi";
 import { useAuthUser } from "../../context/AuthUserContext";
-import { indigo } from "@material-ui/core/colors";
 
 export const useSelectDatas = () => {
   const authUser = useAuthUser();
